@@ -1,23 +1,21 @@
 package market.agriculture.entity;
 
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
 
-@Entity @Getter @Setter
-@Slf4j
-//@DiscriminatorValue(value = "c")
-public class Customer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Entity
+@Getter @Setter
+//@DiscriminatorValue("s")
+public class Seller {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
 
@@ -36,12 +34,10 @@ public class Customer {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-
-
-    public Customer() {
+    public Seller() {
     }
 
-    public Customer(Long id, String name, String naverId, Long balance, Address address, Phone phoneNumber, Role role) {
+    public Seller(Long id, String name, String naverId, Long balance, Address address, Phone phoneNumber, Role role) {
         this.id = id;
         this.name = name;
         this.naverId = naverId;
