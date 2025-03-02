@@ -3,6 +3,7 @@ package market.agriculture.exception.dto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Getter @Setter
 public class ErrorResult {
@@ -16,4 +17,6 @@ public class ErrorResult {
         this.code = code;
         this.message = message;
     }
+
+    
 }

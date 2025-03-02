@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
 
-@Entity @Getter
+@Entity
+@Getter @Setter
 @Slf4j
 public class Customer {
 
@@ -20,6 +22,10 @@ public class Customer {
     private Long id;
 
     private String name;
+
+    //    사용자 회원가입 로그인 아이디 비밀번호
+    private String username;
+    private String password;
 
     private Long balance;
 
@@ -37,9 +43,11 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long id, String name, Long balance, Address address, Phone phoneNumber, Role role) {
+    public Customer(Long id, String name, String username, String password, Long balance, Address address, Phone phoneNumber, Role role) {
         this.id = id;
         this.name = name;
+        this.username = username;
+        this.password = password;
         this.balance = balance;
         this.address = address;
         this.phoneNumber = phoneNumber;
