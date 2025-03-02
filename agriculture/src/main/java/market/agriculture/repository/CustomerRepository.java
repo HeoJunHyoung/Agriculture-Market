@@ -6,6 +6,7 @@ import market.agriculture.entity.Customer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CustomerRepository {
@@ -21,10 +22,17 @@ public class CustomerRepository {
         return em.find(Customer.class, customerId);
     }
 
-    public List<Customer> findByName(String name) {
-        return em.createQuery("select c from Customer c where c.name = :name",
+    public List<Customer> findByNickname(String nickname) {
+        return em.createQuery("select c from Customer c where c.nickname = :nickname",
                 Customer.class)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
+    public Optional<Customer> findByUsername(String username) {
+        return Optional.ofNullable(em.createQuery("select c from Customer c where c.username = :username",
+                        Customer.class)
+                .setParameter("username", username)
+                .getSingleResult());
+    }
 }

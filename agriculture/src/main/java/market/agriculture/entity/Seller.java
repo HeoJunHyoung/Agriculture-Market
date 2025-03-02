@@ -2,6 +2,7 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
@@ -16,7 +17,11 @@ public class Seller {
     @Column(name = "seller_id")
     private Long id;
 
-    private String name;
+    //    사용자 회원가입 로그인 아이디 비밀번호
+    private String username;
+    private String password;
+
+    private String nickname;
 
     @Embedded
     private Address address;

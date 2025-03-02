@@ -28,7 +28,7 @@ public class CustomerService {
     }
 
     private void validateDuplicateMember(Customer customer) {
-        List<Customer> findCustomers = customerRepository.findByName(customer.getName());
+        List<Customer> findCustomers = customerRepository.findByName(customer.getNickname());
         if (!findCustomers.isEmpty()){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }

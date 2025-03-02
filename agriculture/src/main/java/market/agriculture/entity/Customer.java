@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,11 @@ public class Customer {
     @Column(name = "customer_id")
     private Long id;
 
-    private String name;
+    //    사용자 회원가입 로그인 아이디 비밀번호
+    private String username;
+    private String password;
+
+    private String nickname;
 
     private Long balance;
 
