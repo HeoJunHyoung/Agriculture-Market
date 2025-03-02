@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.enumerate.OrderStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,11 +22,10 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private Customer customers;
+    private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
@@ -35,19 +36,16 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    private LocalDateTime orderTime;
-
 
     public Order() {
     }
 
-    public Order(Long id, Customer customers, Item item, Delivery delivery, LocalDateTime orderDate, OrderStatus orderStatus, LocalDateTime orderTime) {
+    public Order(Long id, Customer customer, List<OrderItem> orderItems, Delivery delivery, LocalDateTime orderDate, OrderStatus orderStatus) {
         this.id = id;
-        this.customers = customers;
-        this.item = item;
+        this.customer = customer;
+        this.orderItems = orderItems;
         this.delivery = delivery;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
-        this.orderTime = orderTime;
     }
 }
