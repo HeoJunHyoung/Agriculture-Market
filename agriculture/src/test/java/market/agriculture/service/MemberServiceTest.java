@@ -1,7 +1,7 @@
 package market.agriculture.service;
 
 import market.agriculture.entity.Member;
-import market.agriculture.repository.CustomerRepository;
+import market.agriculture.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class MemberServiceTest {
 
-    @Autowired CustomerService customerService;
-    @Autowired CustomerRepository customerRepository;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    MemberRepository customerRepository;
 
     /**
      * 중복 nickname 회원가입 검증
@@ -28,9 +30,9 @@ class MemberServiceTest {
                 .nickname("kim")
                 .build();
 
-        customerService.join(member1);
+        memberService.join(member1);
 
-        Assertions.assertThatThrownBy(() -> customerService.join(member2))
+        Assertions.assertThatThrownBy(() -> memberService.join(member2))
                 .isInstanceOf(IllegalStateException.class);
     }
 

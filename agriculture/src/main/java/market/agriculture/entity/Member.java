@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity @Getter
 @Slf4j
-@Builder
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,15 +42,4 @@ public class Member {
     public Member() {
     }
 
-    public Member(Long id, String username, String password, String nickname, Long balance, Address address, Phone phoneNumber, Role role, List<Order> orders) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.balance = balance;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
-        this.orders = orders;
-    }
 }
