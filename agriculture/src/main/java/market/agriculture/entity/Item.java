@@ -24,10 +24,9 @@ public class Item {
     public Item() {
     }
 
-    public Item(Long id, Post post, int weight, int quantity) {
-        this.id = id;
+    //==연관관계 메서드==//
+    public void setPost(Post post) {
         this.post = post;
-        this.weight = weight;
-        this.quantity = quantity;
+        post.getItems().add(this);
     }
 }

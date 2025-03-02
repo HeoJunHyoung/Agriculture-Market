@@ -28,10 +28,4 @@ public class Review {
     public Review() {
     }
 
-    public Review(Long id, String reviewTitle, String reviewDescription, LocalDateTime createAt) {
-        this.id = id;
-        this.reviewTitle = reviewTitle;
-        this.reviewDescription = reviewDescription;
-        this.createAt = createAt;
-    }
 }

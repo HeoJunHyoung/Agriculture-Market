@@ -9,7 +9,7 @@ public class Phone {
     private String phone1;
     private String phone2;
 
-    public Phone() {
+    protected Phone() {
     }
 
     public Phone(String phone1, String phone2) {

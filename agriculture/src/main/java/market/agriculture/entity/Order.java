@@ -40,12 +40,20 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, Customer customer, List<OrderItem> orderItems, Delivery delivery, LocalDateTime orderDate, OrderStatus orderStatus) {
-        this.id = id;
+    //==연관관계 메서드==/
+    public void setCustomer(Customer customer) {
         this.customer = customer;
-        this.orderItems = orderItems;
-        this.delivery = delivery;
-        this.orderDate = orderDate;
-        this.orderStatus = orderStatus;
+        customer.getOrders().add(this);
     }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
 }

@@ -30,11 +30,4 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(Long id, String name, Address address, Phone phoneNumber, Role role) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
-    }
 }

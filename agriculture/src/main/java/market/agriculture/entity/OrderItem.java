@@ -30,11 +30,9 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Long id, Item item, Order order, int price, int count) {
-        this.id = id;
-        this.item = item;
+
+    //==연관관계 메서드==//
+    public void setOrder(Order order) {
         this.order = order;
-        this.price = price;
-        this.count = count;
     }
 }

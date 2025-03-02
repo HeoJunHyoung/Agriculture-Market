@@ -23,4 +23,12 @@ public class Delivery {
 
     private DeliveryStatus deliveryStatus;
 
+    public Delivery() {
+    }
+
+    //==연관관계 메서드==//
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
 }

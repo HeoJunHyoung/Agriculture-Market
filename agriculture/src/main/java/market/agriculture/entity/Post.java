@@ -45,15 +45,5 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, Seller seller, List<Review> reviews, List<Item> items, String postTitle, String postDescription, LocalDateTime createAt, Long totalQuantity, Address directSaleAddress) {
-        this.id = id;
-        this.seller = seller;
-        this.reviews = reviews;
-        this.items = items;
-        this.postTitle = postTitle;
-        this.postDescription = postDescription;
-        this.createAt = createAt;
-        this.totalQuantity = totalQuantity;
-        this.directSaleAddress = directSaleAddress;
-    }
+
 }
