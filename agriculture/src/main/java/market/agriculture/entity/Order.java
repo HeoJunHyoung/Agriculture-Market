@@ -75,6 +75,7 @@ public class Order {
         order.setStatus(OrderStatus.RESERVED);
         order.setCreateAt(LocalDateTime.now());
         return order;
+
     }
 
     //==비즈니스 로직==//
