@@ -3,6 +3,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import market.agriculture.exception.custom.NotEnoughStockException;
 
 @Entity @Getter
 @Slf4j
@@ -19,7 +20,7 @@ public class Item {
 
     private int weight;
 
-    private int quantity;
+    private int stockQuantity;
 
     public Item() {
     }
@@ -29,4 +30,18 @@ public class Item {
         this.post = post;
         post.getItems().add(this);
     }
+
+    //==비즈니스 로직==//
+    public void addStockQuantity(int quantity) {
+        stockQuantity += quantity;
+    }
+    public void reduceStockQuantity(int quantity) {
+        int rest= stockQuantity - quantity;
+        if (rest < 0) {
+            throw new NotEnoughStockException("재고가 부족합니다.");
+        }
+        stockQuantity = rest;
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package market.agriculture.dto;
 
-import market.agriculture.entity.Seller;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

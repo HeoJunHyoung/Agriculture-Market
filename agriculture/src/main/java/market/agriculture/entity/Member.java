@@ -2,6 +2,7 @@ package market.agriculture.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @Entity @Getter
 @Slf4j
-public class Customer {
+@Builder
+public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
@@ -38,7 +40,18 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
-    public Customer() {
+    public Member() {
     }
 
+    public Member(Long id, String username, String password, String nickname, Long balance, Address address, Phone phoneNumber, Role role, List<Order> orders) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.balance = balance;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.orders = orders;
+    }
 }

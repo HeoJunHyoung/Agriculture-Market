@@ -1,6 +1,6 @@
 package market.agriculture.dto;
 
-import market.agriculture.entity.Customer;
+import market.agriculture.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,10 +9,10 @@ import java.util.Collection;
 
 public class CustomCustomerDetails implements UserDetails {
 
-    private final Customer customer;
+    private final Member member;
 
-    public CustomCustomerDetails(Customer customer) {
-        this.customer = customer;
+    public CustomCustomerDetails(Member member) {
+        this.member = member;
     }
 
 
@@ -24,7 +24,7 @@ public class CustomCustomerDetails implements UserDetails {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return customer.getRole().toString();
+                return member.getRole().toString();
             }
         });
 
@@ -33,11 +33,11 @@ public class CustomCustomerDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return customer.getUsername();
+        return member.getUsername();
     }
 }

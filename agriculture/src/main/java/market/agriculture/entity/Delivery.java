@@ -19,9 +19,11 @@ public class Delivery {
     @OneToOne(mappedBy = "delivery")
     private Order order;
 
-    private LocalDateTime deliveryTime;
+    @Column(name = "delivery_time")
+    private LocalDateTime createAt;
 
-    private DeliveryStatus deliveryStatus;
+    @Column(name = "delivery_status")
+    private DeliveryStatus status;
 
     public Delivery() {
     }

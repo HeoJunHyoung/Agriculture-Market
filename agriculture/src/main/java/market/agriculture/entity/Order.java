@@ -3,6 +3,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import market.agriculture.entity.enumerate.DeliveryStatus;
 import market.agriculture.entity.enumerate.OrderStatus;
 
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private Member member;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -31,19 +32,18 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime orderDate;
+    private LocalDateTime createAt;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-
+    private OrderStatus status;
 
     public Order() {
     }
 
     //==연관관계 메서드==/
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-        customer.getOrders().add(this);
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
     }
 
     public void addOrderItem(OrderItem orderItem) {
@@ -54,6 +54,43 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    //==생성 메서드==//
+    public static Order createOrder(Member member, Delivery delivery, OrderItem ... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        initStatusAndTime(order);
+        return order;
+    }
+
+    private static void initStatusAndTime(Order order) {
+        order.status = OrderStatus.RESERVED;
+        order.createAt = LocalDateTime.now();
+    }
+
+    //==비즈니스 로직==//
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.DEPARTED) {
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+        }
+        this.status = OrderStatus.CANCEL;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    //==조회 로직==//
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getPrice();
+        }
+        return totalPrice;
     }
 
 }

@@ -1,7 +1,6 @@
 package market.agriculture.service;
 
-import lombok.RequiredArgsConstructor;
-import market.agriculture.entity.Customer;
+import market.agriculture.entity.Member;
 import market.agriculture.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +20,15 @@ public class CustomerService {
     }
 
     @Transactional
-    public Long join(Customer customer) {
-        validateDuplicateMember(customer);
-        customerRepository.save(customer);
-        return customer.getId();
+    public Long join(Member member) {
+        validateDuplicateMember(member);
+        customerRepository.save(member);
+        return member.getId();
     }
 
-    private void validateDuplicateMember(Customer customer) {
-        List<Customer> findCustomers = customerRepository.findByName(customer.getNickname());
-        if (!findCustomers.isEmpty()){
+    private void validateDuplicateMember(Member member) {
+        List<Member> findMembers = customerRepository.findByNickname(member.getNickname());
+        if (!findMembers.isEmpty()){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
