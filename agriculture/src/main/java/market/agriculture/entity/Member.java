@@ -16,7 +16,7 @@ import java.util.List;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @Column(name = "member_id")
     private Long id;
 
     //    사용자 회원가입 로그인 아이디 비밀번호
@@ -36,10 +36,15 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
     public Member() {
     }
+
+
 
 }
