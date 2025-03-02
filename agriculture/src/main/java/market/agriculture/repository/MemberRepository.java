@@ -23,14 +23,14 @@ public class MemberRepository {
     }
 
     public List<Member> findByNickname(String nickname) {
-        return em.createQuery("select c from Member c where c.nickname = :nickname",
+        return em.createQuery("select m from Member m where m.nickname = :nickname",
                 Member.class)
                 .setParameter("nickname", nickname)
                 .getResultList();
     }
 
     public Optional<Member> findByUsername(String username) {
-        return Optional.ofNullable(em.createQuery("select c from Member c where c.username = :username",
+        return Optional.ofNullable(em.createQuery("select m from Member m where m.username = :username",
                         Member.class)
                 .setParameter("username", username)
                 .getSingleResult());
