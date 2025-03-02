@@ -40,6 +40,14 @@ public class Order {
     public Order() {
     }
 
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setCreateAt(LocalDateTime createTime) {
+        this.createAt = createTime;
+    }
+
     //==연관관계 메서드==/
     public void setMember(Member member) {
         this.member = member;
@@ -64,13 +72,10 @@ public class Order {
         for (OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }
-        initStatusAndTime(order);
+        order.setStatus(OrderStatus.RESERVED);
+        order.setCreateAt(LocalDateTime.now());
         return order;
-    }
 
-    private static void initStatusAndTime(Order order) {
-        order.status = OrderStatus.RESERVED;
-        order.createAt = LocalDateTime.now();
     }
 
     //==비즈니스 로직==//
