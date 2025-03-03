@@ -2,6 +2,7 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter
-@Slf4j
+@Setter
 public class Post {
 
     @Id
@@ -34,8 +35,9 @@ public class Post {
     private String postDescription;
 
     @Column(name = "post_date")
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
+    @Column(name = "total_quantity")
     private Long totalQuantity;
 
     @Column(name = "direct_sale_address")
@@ -49,6 +51,23 @@ public class Post {
     public void addReview(Review review) {
         reviews.add(review);
         review.setPost(this);
+    }
+
+    public void addItem(Item item) {
+        items.add(item);
+        item.setPost(this);
+    }
+
+    //==생성 메서드==//
+    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity) {
+        Post post = new Post();
+        post.setMember(member);
+        post.setPostTitle(postTitle);
+        post.setPostDescription(postDescription);
+        post.setDirectSaleAddress(directSaleAddress);
+        post.setCreatedAt(LocalDateTime.now());
+        post.setTotalQuantity(totalQuantity);
+        return post;
     }
 
 }

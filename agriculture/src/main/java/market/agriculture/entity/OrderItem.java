@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity @Getter
-@Slf4j
 public class OrderItem {
 
     @Id

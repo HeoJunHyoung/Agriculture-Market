@@ -3,6 +3,7 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 //import market.agriculture.dto.JoinDto;
 import market.agriculture.entity.embedded.Address;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter
-@Slf4j
+@Setter
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,12 @@ public class Member {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+
+    //==비즈니스 로직==//
+    public boolean isSeller() {
+        return getRole() == Role.Seller;
     }
 
 

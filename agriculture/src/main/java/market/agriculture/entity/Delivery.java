@@ -8,7 +8,6 @@ import market.agriculture.entity.enumerate.DeliveryStatus;
 import java.time.LocalDateTime;
 
 @Entity @Getter
-@Slf4j
 public class Delivery {
 
     @Id
@@ -20,7 +19,7 @@ public class Delivery {
     private Order order;
 
     @Column(name = "delivery_time")
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "delivery_status")
     private DeliveryStatus status;

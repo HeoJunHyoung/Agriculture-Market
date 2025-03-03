@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 
 @Entity @Getter
-@Slf4j
 public class Review {
 
     @Id
@@ -26,7 +25,7 @@ public class Review {
     private String reviewDescription;
 
     @Column(name = "review_date")
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
 
     public Review() {

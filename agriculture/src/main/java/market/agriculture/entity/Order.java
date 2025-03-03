@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Slf4j
 @Table(name = "orders")
 public class Order {
 
@@ -32,7 +31,7 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -44,8 +43,8 @@ public class Order {
         this.status = status;
     }
 
-    public void setCreateAt(LocalDateTime createTime) {
-        this.createAt = createTime;
+    public void setCreatedAt(LocalDateTime createTime) {
+        this.createdAt = createTime;
     }
 
     //==연관관계 메서드==/
@@ -73,7 +72,7 @@ public class Order {
             order.addOrderItem(orderItem);
         }
         order.setStatus(OrderStatus.RESERVED);
-        order.setCreateAt(LocalDateTime.now());
+        order.setCreatedAt(LocalDateTime.now());
         return order;
 
     }
