@@ -22,7 +22,7 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -45,5 +45,10 @@ public class Post {
     public Post() {
     }
 
+    //==연관관계 편의 메서드==//
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setPost(this);
+    }
 
 }

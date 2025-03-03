@@ -15,6 +15,10 @@ public class Review {
     @Column(name = "review_id")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id") // 외래키
+    private Post post;
+
     @Column(name = "review_title")
     private String reviewTitle;
 
@@ -26,6 +30,11 @@ public class Review {
 
 
     public Review() {
+    }
+
+    //==연관관계 메서드==//
+    public void setPost(Post post) {
+        this.post = post;
     }
 
 }
