@@ -1,6 +1,6 @@
 //package market.agriculture.service;
 //
-////import market.agriculture.dto.JoinDto;
+////import market.agriculture.dto.member.JoinDto;
 //import market.agriculture.entity.Member;
 //import market.agriculture.repository.MemberRepository;
 //import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-//import market.agriculture.dto.JoinDto;
+//import market.agriculture.dto.member.JoinDto;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
