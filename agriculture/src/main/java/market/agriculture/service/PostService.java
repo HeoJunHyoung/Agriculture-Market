@@ -1,4 +1,4 @@
-package market.agriculture.service;
-
-public class PostService {
-}
+//package market.agriculture.service;
+//
+//public class PostService {
+//}
