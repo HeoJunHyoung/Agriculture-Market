@@ -42,16 +42,18 @@ class PostServiceTest {
         member.setRole(Role.Seller);
         memberRepository.save(member);
 
+
+        // 상품 아이템 추가
+        Item item1 = new Item("귤", 1L, 100L, 25000);
+        Item item2 = new Item("귤", 2L, 50L, 40000);
+        List<Item> items = Arrays.asList(item1, item2);
+
+
         // 게시글 작성
         String postTitle = "귤 판매 합니다.";
         String postDescription = "우리 귤은 말이지요. 아주 Chill 합니다.";
         Address directSaleAddress = new Address("수원시", "권선동", "12345");
         Long totalQuantity = 150L; // 총 재고량 (100 + 50)
-
-        // 상품 아이템 추가
-        Item item1 = new Item("귤", 1L, 100L);
-        Item item2 = new Item("귤", 2L, 50L);
-        List<Item> items = Arrays.asList(item1, item2);
 
         // 게시글 등록
         Long postId = postService.createPostWithItems(member.getId(), postTitle, postDescription, directSaleAddress, totalQuantity, items);

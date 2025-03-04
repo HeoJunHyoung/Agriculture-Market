@@ -2,12 +2,14 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.enumerate.DeliveryStatus;
 
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter @Setter
 public class Delivery {
 
     @Id
@@ -27,9 +29,11 @@ public class Delivery {
     public Delivery() {
     }
 
-    //==연관관계 메서드==//
-    public void setOrder(Order order) {
-        this.order = order;
+    public static Delivery createDelivery() {
+        Delivery delivery = new Delivery();
+        delivery.setCreatedAt(LocalDateTime.now());
+        delivery.setStatus(DeliveryStatus.DEPARTED);
+        return delivery;
     }
 
 }

@@ -43,6 +43,7 @@ public class PostService {
         for (Item item : items) {
             post.addItem(item);
         }
+
         postRepository.save(post);
         return post.getId();
 

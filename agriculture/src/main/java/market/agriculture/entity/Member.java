@@ -14,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Getter
-@Setter
+@Entity
+@Getter @Setter
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,17 +46,6 @@ public class Member {
     private List<Post> posts = new ArrayList<>();
 
     public Member() {
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
 

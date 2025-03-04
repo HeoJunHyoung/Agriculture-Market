@@ -2,6 +2,7 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.enumerate.DeliveryStatus;
 import market.agriculture.entity.enumerate.OrderStatus;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "orders")
 public class Order {
 
@@ -37,14 +38,6 @@ public class Order {
     private OrderStatus status;
 
     public Order() {
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public void setCreatedAt(LocalDateTime createTime) {
-        this.createdAt = createTime;
     }
 
     //==연관관계 메서드==/

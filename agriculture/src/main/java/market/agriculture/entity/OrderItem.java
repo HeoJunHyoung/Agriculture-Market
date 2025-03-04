@@ -2,9 +2,11 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-@Entity @Getter
+@Entity
+@Getter @Setter
 public class OrderItem {
 
     @Id
@@ -29,11 +31,6 @@ public class OrderItem {
     public OrderItem() {
     }
 
-
-    //==연관관계 메서드==//
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     //==생성 메서드==//
     public static OrderItem createOrderItem(Item item, int orderPrice, int count) {

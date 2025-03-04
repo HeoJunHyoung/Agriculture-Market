@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
+import market.agriculture.entity.enumerate.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Getter
-@Setter
+@Entity
+@Setter @Getter
 public class Post {
 
     @Id
@@ -59,7 +60,7 @@ public class Post {
     }
 
     //==생성 메서드==//
-    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity) {
+    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity, Item... items) {
         Post post = new Post();
         post.setMember(member);
         post.setPostTitle(postTitle);
@@ -67,7 +68,16 @@ public class Post {
         post.setDirectSaleAddress(directSaleAddress);
         post.setCreatedAt(LocalDateTime.now());
         post.setTotalQuantity(totalQuantity);
+
+        // 아이템 추가
+        for (Item item : items) {
+            post.addItem(item);
+        }
+
         return post;
     }
+
+
+
 
 }

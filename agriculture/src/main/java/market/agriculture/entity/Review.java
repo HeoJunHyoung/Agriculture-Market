@@ -2,11 +2,13 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter @Setter
 public class Review {
 
     @Id
@@ -29,11 +31,6 @@ public class Review {
 
 
     public Review() {
-    }
-
-    //==연관관계 메서드==//
-    public void setPost(Post post) {
-        this.post = post;
     }
 
 }

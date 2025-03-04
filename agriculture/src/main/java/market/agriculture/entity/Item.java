@@ -2,10 +2,12 @@ package market.agriculture.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import market.agriculture.exception.custom.NotEnoughStockException;
 
-@Entity @Getter
+@Entity
+@Getter @Setter
 public class Item {
 
     @Id
@@ -23,18 +25,25 @@ public class Item {
 
     private Long stockQuantity;
 
+    private int price;
+
     public Item() {
     }
 
-    public Item(String itemName, Long kg, Long stockQuantity) {
+    public Item(String itemName, Long weight, Long stockQuantity, int price) {
         this.itemName = itemName;
-        this.weight = kg;
+        this.weight = weight;
         this.stockQuantity = stockQuantity;
+        this.price = price;
     }
 
-    //==연관관계 메서드==//
-    public void setPost(Post post) {
-        this.post = post;
+    //==생성 메서드==//
+    public static Item createItem(String itemName, Long kg, Long stockQuantity) {
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setWeight(kg);
+        item.setStockQuantity(stockQuantity);
+        return item;
     }
 
     //==비즈니스 로직==//
