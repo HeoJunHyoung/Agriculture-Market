@@ -1,4 +1,4 @@
-package market.agriculture.dto;
+package market.agriculture.dto.member;
 
 import lombok.Getter;
 import lombok.Setter;
