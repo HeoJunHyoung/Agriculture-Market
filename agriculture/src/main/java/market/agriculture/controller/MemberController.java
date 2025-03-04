@@ -1,6 +1,8 @@
 package market.agriculture.controller;
 
 import market.agriculture.dto.member.JoinDto;
+import market.agriculture.service.MemberService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/member")
 public class MemberController {
 
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @GetMapping("/")
+    public String test(){return "root page";}
+    @GetMapping("/login")
+    public String login(){
+        return "login Page";
+    }
+
     /**
      *
      * @param joinDto
@@ -21,6 +36,8 @@ public class MemberController {
      */
     @PostMapping("/join")
     public void join(JoinDto joinDto) {
+
+        memberService.join(joinDto);
 
     }
 

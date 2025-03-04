@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 //import market.agriculture.dto.member.JoinDto;
+import market.agriculture.dto.member.JoinDto;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
@@ -46,6 +47,21 @@ public class Member {
 
     public Member() {
     }
+
+    public static Member createMember(String username, Role role) {
+        Member member = new Member();
+        member.setUsername(username);
+        member.setRole(role);
+        return member;
+    }
+    public static Member createMemver(JoinDto joinDto,BCryptPasswordEncoder bCryptPasswordEncoder){
+        Member member = new Member();
+        member.setRole(Role.valueOf(joinDto.getRole()));
+        member.setPassword(bCryptPasswordEncoder.encode(joinDto.getPassword()));
+        member.setUsername(joinDto.getUsername());
+        return member;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
