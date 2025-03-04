@@ -2,7 +2,6 @@ package market.agriculture.controller.apicontroller;
 
 import jakarta.validation.Valid;
 import market.agriculture.dto.CreateMemberRequest;
-import market.agriculture.dto.CreateMemberResponse;
 import market.agriculture.entity.Member;
 import market.agriculture.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/member")
-public class MemberApiController {
+public class MemberAuthApiController {
 
     private final MemberService memberService;
 
     @Autowired
-    public MemberApiController(MemberService memberService) {
+    public MemberAuthApiController(MemberService memberService) {
         this.memberService = memberService;
     }
 

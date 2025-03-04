@@ -17,7 +17,6 @@ public class CreateMemberRequest {
 
     @NotEmpty
     @Size(min=8)
-    @Email
     private String username;
 
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",

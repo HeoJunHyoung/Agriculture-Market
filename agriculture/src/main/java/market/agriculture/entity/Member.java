@@ -60,6 +60,16 @@ public class Member {
         return member;
     }
 
+    //==업데이트 메서드==//
+    public void updateBasicInfo(String username, String nickname, Address address) {
+        this.username = username;
+        this.nickname = nickname;
+        this.address = address;
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 
     //==비즈니스 로직==//
     public boolean isSeller() {

@@ -2,6 +2,8 @@ package market.agriculture.service;
 
 //import market.agriculture.dto.JoinDto;
 import market.agriculture.dto.CreateMemberRequest;
+import market.agriculture.dto.UpdateMemberBasicRequest;
+import market.agriculture.dto.UpdateMemberPasswordRequest;
 import market.agriculture.entity.Member;
 import market.agriculture.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,15 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public void updateBasic(Long id, UpdateMemberBasicRequest request) {
+        Member member = memberRepository.findById(id);
+        member.updateBasicInfo(request.getUsername(), request.getNickname(), request.getAddress());
+    }
+
+    public void updatePassword(Long id, UpdateMemberPasswordRequest request) {
+        Member member = memberRepository.findById(id);
+        member.updatePassword(request.getPassword1());
+    }
 
     private void validateDuplicateMember(Member member) {
         List<Member> findMembers = memberRepository.findByUsername(member.getUsername());
