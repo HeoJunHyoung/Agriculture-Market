@@ -1,4 +1,4 @@
-package market.agriculture.controller;
+package market.agriculture.controller.apicontroller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

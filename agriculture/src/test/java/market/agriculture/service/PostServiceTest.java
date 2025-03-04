@@ -44,8 +44,9 @@ class PostServiceTest {
 
 
         // 상품 아이템 추가
-        Item item1 = new Item("귤", 1L, 100L, 25000);
-        Item item2 = new Item("귤", 2L, 50L, 40000);
+        Item item1 = Item.createItem("귤", 1L, 100L, 25000);
+        Item item2 = Item.createItem("귤", 2L, 50L, 40000);
+
         List<Item> items = Arrays.asList(item1, item2);
 
 

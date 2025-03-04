@@ -1,6 +1,7 @@
 package market.agriculture.service;
 
 import market.agriculture.entity.*;
+import market.agriculture.entity.enumerate.DeliveryStatus;
 import market.agriculture.repository.ItemRepository;
 import market.agriculture.repository.MemberRepository;
 import market.agriculture.repository.OrderRepository;
@@ -35,6 +36,7 @@ public class OrderService {
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
 
+
         Member member = memberRepository.findById(memberId);
         Item item = itemRepository.findById(itemId);
 
@@ -46,6 +48,7 @@ public class OrderService {
 
         orderRepository.save(order);
         return order.getId();
+
     }
 
 

@@ -1,4 +1,4 @@
-package market.agriculture.controller;
+package market.agriculture.controller.apicontroller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

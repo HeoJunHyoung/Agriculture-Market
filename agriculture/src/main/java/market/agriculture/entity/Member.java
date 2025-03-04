@@ -48,6 +48,18 @@ public class Member {
     public Member() {
     }
 
+    //==생성 메서드==//
+    public static Member createMember(String username, String password, String nickname, Address address, Phone phoneNumber, Role role) {
+        Member member = new Member();
+        member.setUsername(username);
+        member.setPassword(password);
+        member.setNickname(nickname);
+        member.setAddress(address);
+        member.setBalance(100000L);
+        member.setRole(role);
+        return member;
+    }
+
 
     //==비즈니스 로직==//
     public boolean isSeller() {

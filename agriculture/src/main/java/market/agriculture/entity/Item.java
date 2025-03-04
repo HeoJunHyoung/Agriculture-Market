@@ -30,19 +30,13 @@ public class Item {
     public Item() {
     }
 
-    public Item(String itemName, Long weight, Long stockQuantity, int price) {
-        this.itemName = itemName;
-        this.weight = weight;
-        this.stockQuantity = stockQuantity;
-        this.price = price;
-    }
-
     //==생성 메서드==//
-    public static Item createItem(String itemName, Long kg, Long stockQuantity) {
+    public static Item createItem(String itemName, Long kg, Long stockQuantity, int price) {
         Item item = new Item();
         item.setItemName(itemName);
         item.setWeight(kg);
         item.setStockQuantity(stockQuantity);
+        item.setPrice(price);
         return item;
     }
 
