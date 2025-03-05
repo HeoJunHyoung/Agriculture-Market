@@ -1,5 +1,6 @@
 package market.agriculture.service;
 
+import market.agriculture.dto.post.PostUploadDto;
 import market.agriculture.entity.Item;
 import market.agriculture.entity.Member;
 import market.agriculture.entity.Post;
@@ -11,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 @Transactional(readOnly = true)
@@ -29,24 +35,41 @@ public class PostService {
     }
 
     @Transactional
-    public Long createPostWithItems(Long memberId, String postTitle, String postDescription,
-                                    Address directSaleAddress, Long totalQuantity, List<Item> items) {
+    public Long createPostWithItems(String username, PostUploadDto postUploadDto) {
 
-        Member member = memberRepository.findById(memberId);
+        if (!postUploadDto.isLengthEqual()){
+            throw new IllegalStateException("모든 Item은 단위와 가격, 양이 지정되어야 합니다.");
+        }
+
+        List<Member> members = memberRepository.findByUsername(username);
+
+        if(members.isEmpty()){
+            throw new IllegalStateException("존재하지 않는 유저입니다.");
+        }
+        Member member = members.get(0);
+
+        if(postUploadDto.getDirectSaleAddress().isEmpty()){
+            postUploadDto.setDirectSaleAddress(member.getAddress());
+        }
 
         if (!member.isSeller()) {
             throw new IllegalStateException("판매자만 게시글을 작성할 수 있습니다.");
         }
 
-        Post post = Post.createPost(member, postTitle, postDescription, directSaleAddress, totalQuantity);
+        Post post = postUploadDto.createPost(member);
 
-        for (Item item : items) {
+        if (!postUploadDto.isLengthEqual()){
+            throw new IllegalStateException("모든 Item은 단위와 가격, 양이 지정되어야 합니다.");
+        }
+
+        List<Item> items = postUploadDto.createItems();
+        for(Item item : items){
+            itemRepository.save(item);
             post.addItem(item);
         }
 
         postRepository.save(post);
         return post.getId();
-
 
     }
 }

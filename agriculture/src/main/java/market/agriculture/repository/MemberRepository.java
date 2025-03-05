@@ -6,6 +6,7 @@ import market.agriculture.entity.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MemberRepository {
@@ -17,8 +18,8 @@ public class MemberRepository {
         em.persist(member);
     }
 
-    public Member findById(Long memberId) {
-        return em.find(Member.class, memberId);
+    public Optional<Member> findById(Long memberId) {
+        return Optional.ofNullable(em.find(Member.class, memberId));
     }
 
     public List<Member> findByNickname(String nickname) {

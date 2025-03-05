@@ -39,4 +39,5 @@ public class CustomMemberDetails implements UserDetails {
     public String getUsername() {
         return member.getUsername();
     }
+
 }

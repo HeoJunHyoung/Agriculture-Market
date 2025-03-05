@@ -45,6 +45,9 @@ public class Post {
     @Embedded
     private Address directSaleAddress;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean isPublished;
+
     public Post() {
     }
 
@@ -68,6 +71,7 @@ public class Post {
         post.setDirectSaleAddress(directSaleAddress);
         post.setCreatedAt(LocalDateTime.now());
         post.setTotalQuantity(totalQuantity);
+        post.setIsPublished(true);
 
         // 아이템 추가
         for (Item item : items) {

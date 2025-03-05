@@ -27,14 +27,20 @@ public class Item {
 
     private int price;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean isPublished;
+
     public Item() {
     }
 
-    public Item(String itemName, Long weight, Long stockQuantity, int price) {
+    public Item(Long id, Post post, String itemName, Long weight, Long stockQuantity, int price, Boolean isPublished) {
+        this.id = id;
+        this.post = post;
         this.itemName = itemName;
         this.weight = weight;
         this.stockQuantity = stockQuantity;
         this.price = price;
+        this.isPublished = isPublished;
     }
 
     //==생성 메서드==//
@@ -44,6 +50,7 @@ public class Item {
         item.setWeight(kg);
         item.setStockQuantity(stockQuantity);
         item.setPrice(price);
+        item.setIsPublished(true);
         return item;
     }
 

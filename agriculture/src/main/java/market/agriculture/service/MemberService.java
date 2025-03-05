@@ -26,9 +26,9 @@ public class MemberService {
     @Transactional
     public Long join(JoinDto joinDto) {
 
-
         if(joinDto.isPasswordEqual()) {
 
+            joinDto.setPassword1(bCryptPasswordEncoder.encode(joinDto.getPassword1()));
             Member member = joinDto.toEntity();
             validateDuplicateMember(member);
             memberRepository.save(member);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,14 +36,17 @@ public class OrderService {
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
 
-        Member member = memberRepository.findById(memberId);
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(!member.isPresent()){
+            throw new IllegalStateException("존재하지 않는 유저입니다.");
+        }
         Item item = itemRepository.findById(itemId);
 
         Delivery delivery = Delivery.createDelivery();
 
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
-        Order order = Order.createOrder(member, delivery, orderItem);
+        Order order = Order.createOrder(member.get(), delivery, orderItem);
 
         orderRepository.save(order);
         return order.getId();

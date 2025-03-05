@@ -20,4 +20,10 @@ public class Address {
         this.street = street;
         this.zipcode = zipcode;
     }
+
+    public boolean isEmpty() {
+        return (city == null || city.isBlank()) &&
+                (street == null || street.isBlank()) &&
+                (zipcode == null || zipcode.isBlank());
+    }
 }
