@@ -1,12 +1,8 @@
 package market.agriculture.controller;
 
-import com.sun.security.auth.UserPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import market.agriculture.dto.chat.ChatDto;
 import market.agriculture.dto.chat.OneToOneChatDto;
-import market.agriculture.repository.MemberRepository;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class OrderExecutionDto {
+public class OrderRequestDto {
 
     private Long item_id;
     private int quantity;

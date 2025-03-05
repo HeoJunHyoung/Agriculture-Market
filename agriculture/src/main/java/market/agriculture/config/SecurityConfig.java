@@ -48,12 +48,14 @@ public class SecurityConfig {
 
         http.csrf((auth) -> auth.disable());
 
-        http.formLogin((auth) -> auth
-                .loginPage("/member/login") // 로그인 커스텀 페이지로 get요청
-                .loginProcessingUrl("/login") // 로그인 post요청
-                .defaultSuccessUrl("/",true) //로그인 성공시
-                .failureUrl("/member/login") //로그인 실패시
-                );
+        http.formLogin((auth)-> auth.disable());
+
+//        http.formLogin((auth) -> auth
+//                .loginPage("/member/login") // 로그인 커스텀 페이지로 get요청
+//                .loginProcessingUrl("/login") // 로그인 post요청
+//                .defaultSuccessUrl("/",true) //로그인 성공시
+//                .failureUrl("/member/login") //로그인 실패시
+//                );
 
         http.httpBasic((auth) -> auth.disable());
 

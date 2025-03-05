@@ -4,13 +4,10 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 //import market.agriculture.dto.member.JoinDto;
-import market.agriculture.dto.member.JoinDto;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,6 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    //    사용자 회원가입 로그인 아이디 비밀번호
     private String username;
     private String password;
 
@@ -49,19 +45,25 @@ public class Member {
     public Member() {
     }
 
-    public static Member createMember(String username, Role role) {
+    public static Member createMemberForJWTFilter(String username, Role role) {
         Member member = new Member();
         member.setUsername(username);
         member.setRole(role);
         return member;
     }
-    public static Member createMemver(JoinDto joinDto,BCryptPasswordEncoder bCryptPasswordEncoder){
+
+    public static Member createMember(String username, String password, Address address, Role role, Phone phoneNumber, String nickname) {
         Member member = new Member();
-        member.setRole(Role.valueOf(joinDto.getRole()));
-        member.setPassword(bCryptPasswordEncoder.encode(joinDto.getPassword()));
-        member.setUsername(joinDto.getUsername());
+        member.setUsername(username);
+        member.setAddress(address);
+        member.setPassword(password);
+        member.setRole(role);
+        member.setAddress(address);
+        member.setPhoneNumber(phoneNumber);
+        member.setNickname(nickname);
         return member;
     }
+
 
     public void setUsername(String username) {
         this.username = username;

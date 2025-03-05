@@ -77,7 +77,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
 
-        Member member = Member.createMember(username,Role.valueOf(role));
+        Member member = Member.createMemberForJWTFilter(username,Role.valueOf(role));
         CustomMemberDetails customMemberDetails = new CustomMemberDetails(member);
 
         //스프링 시큐리티 인증 토큰 생성

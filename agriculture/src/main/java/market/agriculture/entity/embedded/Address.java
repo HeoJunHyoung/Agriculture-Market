@@ -2,8 +2,10 @@ package market.agriculture.entity.embedded;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import lombok.Getter;
 
 @Embeddable
+@Getter
 public class Address {
 
     private String city;

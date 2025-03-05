@@ -27,6 +27,15 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findByMemberId(Long memberId) {
+        return em.createQuery("select o from Order o " +
+                        "join fetch Member m " +
+                        "join fetch Delivery d " +
+                        "where o.member.id = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
     /**
      * Dynamic Query TO DO
      * public List<Order> findAll(OrderSearch orderSearch) {

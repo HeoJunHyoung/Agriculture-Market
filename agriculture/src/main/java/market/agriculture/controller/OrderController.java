@@ -1,11 +1,12 @@
 package market.agriculture.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import market.agriculture.dto.CustomMemberDetails;
 import market.agriculture.dto.order.OrderDeliveryDto;
 import market.agriculture.dto.order.OrderDto;
-import market.agriculture.dto.order.OrderExecutionDto;
+import market.agriculture.dto.order.OrderRequestDto;
 import market.agriculture.dto.order.OrderInfoDto;
-import market.agriculture.entity.Order;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,23 +20,24 @@ import java.util.List;
  * 판매자는 배송처리되지 않은 상품을 조회한다.
  * 주문을 취소한다.
  */
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
-//    private final JwtUtil jwtUtil;
 //    private final MemberService memberService;
 //    private final OrderService orderService;
 
-
     /**
      *
-     * @param orderExecutionDto (item_id, quantity(주문수량))
+     * @param orderRequestDto (item_id, quantity(주문수량))
      * @return 주문 정보 및 배송정보 OrderDeliveryDto 반환
      * @apiNote 주문 발생시 호출되는 요청이다. 주문 테이블에 저장 및 api 서버로 주문을 전달한다.
      */
+
     @PostMapping("")
-    public OrderDeliveryDto orderItem(OrderExecutionDto orderExecutionDto){
+    public OrderDeliveryDto orderItem(OrderRequestDto orderRequestDto){
+
 
 
 //        우체국API 서버로 요청 보내는 로직 필요
@@ -59,16 +61,12 @@ public class OrderController {
 
     /**
      *
-     * @param request
+     * @param customMemberDetails
      * @return List<OrderInfoDto>
      * @apiNote 자신이 주문한 주문내역 전체를 조회하기 위한 요청이다.
      */
     @GetMapping("/history")
-    public List<OrderInfoDto> getOrdersHistory(HttpServletRequest request){
-        String accessToken = request.getHeader("Authorization");
-//        String username = jwtutil.getUsername(accessToken);
-//        Member member = memberservice.findByUsername(username);
-
+    public List<OrderInfoDto> getOrdersHistory(@AuthenticationPrincipal CustomMemberDetails customMemberDetails){
         return null;
     }
 

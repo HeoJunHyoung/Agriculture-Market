@@ -1,9 +1,11 @@
 package market.agriculture.entity.embedded;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Embeddable
+@Getter
 public class Phone {
 
     private String phone1;
