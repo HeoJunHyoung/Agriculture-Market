@@ -62,6 +62,10 @@ public class OrderService {
         order.cancel();
     }
 
+    public List<Order> getOrderByMemberId(Long memberId) {
+        return orderRepository.findByMemberId(memberId);
+    }
+
 
     /**
      * 주문 검색
