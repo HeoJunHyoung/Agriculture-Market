@@ -70,6 +70,12 @@ public class Item {
         }
         stockQuantity = rest;
     }
+    public void unpublish() {
+//        if (!this.isPublished) {
+//            throw new IllegalStateException("이미 비공개된 아이템입니다.");
+//        }
+        this.isPublished = false;
+    }
 
     public int modifyCheckItem(String itemName, List<Integer> itemPrices, List<Long> itemWeights, List<Long> itemQuantities) {
         for (int i = 0; i < itemPrices.size(); i++) {

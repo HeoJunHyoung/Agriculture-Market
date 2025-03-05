@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Service
@@ -96,9 +97,9 @@ public class PostService {
         }
 
         // 게시글이 가지고 있는 item에 같은 값이 있는지, 새로운 값이 있는지 확인 후 생성 및 isPublish 관리
-        List<Boolean> newlyAddedItemList = IntStream.range(0, postModifyDto.getItemQuantities().size())
+        List<Boolean> newlyAddedItemList = new ArrayList<>(IntStream.range(0, postModifyDto.getItemQuantities().size())
                 .mapToObj(i -> true)
-                .toList();
+                .toList());
 
         for (Item item: post.getItems()){
 
@@ -113,6 +114,7 @@ public class PostService {
 
             if(newlyAddedItemList.get(i)){
                 Item item = Item.createItem(postModifyDto.getItemName(),postModifyDto.getItemWeights().get(i),postModifyDto.getItemQuantities().get(i), postModifyDto.getItemPrices().get(i));
+                post.addItem(item);
                 itemRepository.save(item);
             }
 
@@ -123,12 +125,29 @@ public class PostService {
         return post.getId();
     }
 
-    public Long deletePost(Long postId){
+    @Transactional
+    public Long deletePostWithItems(String username, Long postId){
+
+
+        Member member = memberRepository.findByUsername(username)
+                .stream().findFirst()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 유저입니다."));
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다."));
 
+        if(!post.getMember().getUsername().equals(member.getUsername())){
+            throw new IllegalStateException("잘못된 유저의 접근입니다.");
+        }
+
         post.unpublish();
+
+        List<Item> items = post.getItems();
+        items.stream().forEach(item -> {
+            item.unpublish();
+            itemRepository.save(item);
+        });
+
         postRepository.save(post);
 
         return post.getId();

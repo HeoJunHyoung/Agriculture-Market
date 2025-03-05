@@ -56,17 +56,20 @@ public class PostController {
     public void modifyPost(@Valid @RequestBody PostModifyDto postModifyDto, @AuthenticationPrincipal CustomMemberDetails customMemberDetails){
 
 
+        postService.updatePostWithItems(customMemberDetails.getUsername(),postModifyDto);
 
     }
 
     /**
      *
-     * @param request
-     * @param post_id
+     * @param customMemberDetails
+     * @param postId
      * @apiNote 삭제 요청자가 게시글의 생성자인지 확인 후 삭제한다.
      */
-    @GetMapping("/delete/{post_id}")
-    public void deletePost(HttpServletRequest request, @PathVariable Long post_id){
+    @DeleteMapping("/delete/{postId}")
+    public void deletePost(@AuthenticationPrincipal CustomMemberDetails customMemberDetails, @PathVariable("postId") Long postId){
+
+        postService.deletePostWithItems(customMemberDetails.getUsername(),postId);
 
     }
 

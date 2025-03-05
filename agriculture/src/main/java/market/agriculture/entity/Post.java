@@ -84,9 +84,9 @@ public class Post {
 
     // 비즈니스 로직
     public void unpublish() {
-        if (!this.isPublished) {
-            throw new IllegalStateException("이미 비공개된 게시글입니다.");
-        }
+//        if (!this.isPublished) {
+//            throw new IllegalStateException("이미 비공개된 게시글입니다.");
+//        }
         this.isPublished = false;
     }
 
