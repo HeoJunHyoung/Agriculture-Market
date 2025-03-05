@@ -82,6 +82,18 @@ public class Post {
     }
 
 
+    // 비즈니스 로직
+    public void unpublish() {
+        if (!this.isPublished) {
+            throw new IllegalStateException("이미 비공개된 게시글입니다.");
+        }
+        this.isPublished = false;
+    }
 
-
+    public void modifyPost(String title, String postDescription, Address directSaleAddress, Long totalQuantity) {
+        this.setPostTitle(title);
+        this.setPostDescription(postDescription);
+        this.setDirectSaleAddress(directSaleAddress);
+        this.setTotalQuantity(totalQuantity);
+    }
 }

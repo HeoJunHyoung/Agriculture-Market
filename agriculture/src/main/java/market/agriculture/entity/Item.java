@@ -3,8 +3,13 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import market.agriculture.exception.custom.NotEnoughStockException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Entity
 @Getter @Setter
@@ -66,6 +71,23 @@ public class Item {
         stockQuantity = rest;
     }
 
+    public int modifyCheckItem(String itemName, List<Integer> itemPrices, List<Long> itemWeights, List<Long> itemQuantities) {
+        for (int i = 0; i < itemPrices.size(); i++) {
 
+            // item 가격, 이름, 무게가 같으면 quantity값만 수정
+            if (this.itemName.equals(itemName) &&
+                    this.price == itemPrices.get(i) &&
+                    this.weight.equals(itemWeights.get(i))) {
+
+                // 기존 Item과 이름, 가격, 무게가 같은 경우, 수량 업데이트
+                this.setStockQuantity(itemQuantities.get(i));
+                this.setIsPublished(true);
+                return i;
+            }
+        }
+        // 다른경우 flag = False
+        this.setIsPublished(false);
+        return -1;
+    }
 
 }

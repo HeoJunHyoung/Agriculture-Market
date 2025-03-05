@@ -19,8 +19,8 @@ public class PostRepository {
         em.persist(post);
     }
 
-    public Post findById(Long postId) {
-        return em.find(Post.class, postId);
+    public Optional<Post> findById(Long postId) {
+        return Optional.ofNullable(em.find(Post.class, postId));
     }
 
     public List<Post> findAll() {
