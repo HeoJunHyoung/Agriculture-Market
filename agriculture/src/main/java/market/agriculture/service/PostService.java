@@ -1,6 +1,7 @@
 package market.agriculture.service;
 
 import market.agriculture.dto.item.ItemCreateRequest;
+import market.agriculture.dto.post.PostDetailsResponse;
 import market.agriculture.dto.post.PostUploadRequest;
 import market.agriculture.dto.post.ReviewUploadReqeust;
 import market.agriculture.entity.Item;
@@ -164,5 +165,14 @@ public class PostService {
         post.addReview(review);
 
         postRepository.save(post);
+    }
+
+    public PostDetailsResponse getOneDetailPostWithReview(Long postId) {
+
+        Post post = postRepository.findById(postId)
+                .stream().findFirst().orElseThrow(()-> new IllegalStateException("존재하지 않는 게시글입니다."));
+
+        return PostDetailsResponse.createByPost(post);
+
     }
 }

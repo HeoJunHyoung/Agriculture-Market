@@ -2,7 +2,7 @@ package market.agriculture.controller;
 
 import jakarta.validation.Valid;
 import market.agriculture.dto.CustomMemberDetails;
-import market.agriculture.dto.post.PostInfoDto;
+import market.agriculture.dto.post.PostDetailsResponse;
 import market.agriculture.dto.post.postListResPonseDto;
 import market.agriculture.dto.post.PostUploadRequest;
 import market.agriculture.dto.post.ReviewUploadReqeust;
@@ -78,15 +78,16 @@ public class PostController {
 
     /**
      *
-     * @param post_id
+     * @param postId
      * @return PostInfoDto : 게시글의 정보, 판매자의 정보, 리뷰
      * @apiNote 게시글 하나에 대한 모든 정보를 보여주기 위한 요청이다.
      */
-    @GetMapping("/details/{post_id}")
-    public PostInfoDto getOnePost(@PathVariable Long post_id){
-//        여기에 리뷰글들도 다 긁어서 보여줘야 하고,
+    @GetMapping("/details/{postId}")
+    public PostDetailsResponse getOnePost(@PathVariable("postId") Long postId){
 
-        return null;
+        PostDetailsResponse postDetailsResponse = postService.getOneDetailPostWithReview(postId);
+
+        return postDetailsResponse;
     }
 
 
@@ -102,7 +103,6 @@ public class PostController {
                              @RequestBody ReviewUploadReqeust reviewUploadReqeust, @PathVariable("postId") Long postId){
 
         postService.createReview(customMemberDetails.getUsername(),reviewUploadReqeust,postId);
-
 
     }
 

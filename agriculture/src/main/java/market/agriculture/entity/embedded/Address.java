@@ -26,4 +26,13 @@ public class Address {
                 (street == null || street.isBlank()) &&
                 (zipcode == null || zipcode.isBlank());
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                '}';
+    }
 }
