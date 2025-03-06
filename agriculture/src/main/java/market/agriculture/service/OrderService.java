@@ -1,7 +1,10 @@
 package market.agriculture.service;
 
+import lombok.extern.slf4j.Slf4j;
+import market.agriculture.dto.order.CheckOrderDetailsResponse;
+import market.agriculture.dto.order.CheckOrderResponse;
+import market.agriculture.dto.order.CreateOrderRequest;
 import market.agriculture.entity.*;
-import market.agriculture.entity.enumerate.DeliveryStatus;
 import market.agriculture.repository.ItemRepository;
 import market.agriculture.repository.MemberRepository;
 import market.agriculture.repository.OrderRepository;
@@ -10,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 public class OrderService {
 
     private final MemberRepository memberRepository;
@@ -27,30 +32,45 @@ public class OrderService {
     }
 
     /**
-     * 주문
-     * @param memberId
-     * @param itemId
-     * @param count
+     * 주문 등록
+     * @param request
      * @return
      */
     @Transactional
-    public Long order(Long memberId, Long itemId, int count) {
+    public Long createOrder(CreateOrderRequest request) {
+        log.info("Creating order for member ID: {}", request.getMemberId());
 
+        // 주문자 조회
+        Member member = memberRepository.findById(request.getMemberId());
 
-        Member member = memberRepository.findById(memberId);
-        Item item = itemRepository.findById(itemId);
+        // 배송 정보 생성
+        Delivery delivery = request.getDelivery().toEntity();
+        log.info("Delivery created for order: {}", delivery);
 
-        Delivery delivery = Delivery.createDelivery();
+        // 주문 상품 생성
+        List<OrderItem> orderItems = request.getOrderItems().stream()
+                .map(orderItemRequest -> {
+                    Item item = itemRepository.findById(orderItemRequest.getItemId())
+                            .orElseThrow(() -> {
+                                log.error("Item not found with ID: {}", orderItemRequest.getItemId());
+                                return new IllegalArgumentException("상품을 찾을 수 없습니다.");
+                            });
+                    return orderItemRequest.toEntity(item);
+                })
+                .collect(Collectors.toList());
+        log.info("Order items created: {}", orderItems);
 
-        OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
+        // 주문 생성
+        Order order = request.toEntity(member, delivery, orderItems);
+        log.info("Order created: {}", order);
 
-        Order order = Order.createOrder(member, delivery, orderItem);
-
+        // 주문 저장
         orderRepository.save(order);
+        log.info("Order saved with ID: {}", order.getId());
+
         return order.getId();
 
     }
-
 
     /**
      * 주문 취소
@@ -62,8 +82,34 @@ public class OrderService {
         order.cancel();
     }
 
-    public List<Order> getOrderByMemberId(Long memberId) {
-        return orderRepository.findByMemberId(memberId);
+    /**
+     * 주문 전체 조회
+     * @param memberId
+     * @return
+     */
+    public List<CheckOrderResponse> getOrdersByMemberId(Long memberId) {
+        List<Order> orders = orderRepository.findOrderByMemberId(memberId);
+        return orders.stream()
+                .map(CheckOrderResponse::new)
+                .collect(Collectors.toList());
+    }
+
+
+    /**
+     * 주문 상세 조회
+     * @param orderId
+     * @return
+     */
+    public CheckOrderDetailsResponse getOrdersDetailsByOrderId(Long orderId) {
+        Order order = orderRepository.findOrderDetailsByOrderId(orderId);
+        log.info("Order: {}", order);
+        log.info("Order Items: {}", order.getOrderItems());
+        log.info("Order Member: {}", order.getMember());
+        log.info("Order Delivery: {}", order.getDelivery());
+
+        CheckOrderDetailsResponse orderDto = new CheckOrderDetailsResponse(order);
+        log.warn("CheckOrderDetailsResponse: {}", orderDto); // DTO 객체 로깅
+        return orderDto;
     }
 
 

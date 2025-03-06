@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
 import market.agriculture.entity.embedded.Phone;
 import market.agriculture.entity.enumerate.Role;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;

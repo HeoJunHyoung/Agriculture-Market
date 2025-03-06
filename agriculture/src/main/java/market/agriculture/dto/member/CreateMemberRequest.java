@@ -1,4 +1,4 @@
-package market.agriculture.dto;
+package market.agriculture.dto.member;
 
 
 import jakarta.validation.constraints.Email;
@@ -34,6 +34,9 @@ public class CreateMemberRequest {
     private Address address;
 
     private Phone phoneNumber;
+
+    public CreateMemberRequest() {
+    }
 
     public boolean isPasswordMatch() {
         return this.password1.equals(this.password2);

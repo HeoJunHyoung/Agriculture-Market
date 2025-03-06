@@ -1,4 +1,4 @@
-package market.agriculture.dto;
+package market.agriculture.dto.member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -23,5 +23,6 @@ public class UpdateMemberBasicRequest {
 
     private Address address;
 
-
+    public UpdateMemberBasicRequest() {
+    }
 }

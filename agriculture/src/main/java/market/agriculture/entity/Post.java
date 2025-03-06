@@ -24,7 +24,7 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post")
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -49,18 +49,13 @@ public class Post {
     }
 
     //==연관관계 편의 메서드==//
-    public void addReview(Review review) {
-        reviews.add(review);
-        review.setPost(this);
-    }
-
     public void addItem(Item item) {
         items.add(item);
         item.setPost(this);
     }
 
     //==생성 메서드==//
-    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity, Item... items) {
+    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity, List<Item> items) {
         Post post = new Post();
         post.setMember(member);
         post.setPostTitle(postTitle);

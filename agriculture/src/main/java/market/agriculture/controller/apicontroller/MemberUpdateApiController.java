@@ -2,8 +2,8 @@ package market.agriculture.controller.apicontroller;
 
 
 import jakarta.validation.Valid;
-import market.agriculture.dto.UpdateMemberBasicRequest;
-import market.agriculture.dto.UpdateMemberPasswordRequest;
+import market.agriculture.dto.member.UpdateMemberBasicRequest;
+import market.agriculture.dto.member.UpdateMemberPasswordRequest;
 import market.agriculture.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,8 @@ public class MemberUpdateApiController {
         memberService.updateBasic(id, request);
     }
 
-    public void updateMemberPassword(@PathVariable("Id") Long id, @RequestBody @Valid UpdateMemberPasswordRequest request) {
+    @PostMapping("/update/password/{id}")
+    public void updateMemberPassword(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberPasswordRequest request) {
         memberService.updatePassword(id, request);
     }
 
