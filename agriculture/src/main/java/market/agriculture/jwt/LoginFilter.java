@@ -51,9 +51,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         CustomMemberDetails customMemberDetails = (CustomMemberDetails) authentication.getPrincipal();
         String username = customMemberDetails.getUsername();
+        Long memberId = customMemberDetails.getMemberId();
 
         // 만료시간 약25일
-        String accessToken = jwtUtil.createJwt("access",username,role,60  * 60 * 60 * 10000L);
+        String accessToken = jwtUtil.createJwt("access",username,role,60  * 60 * 60 * 10000L,memberId);
 //        String refreshToken = jwtUtil.createJwt("refresh","username",role,24 *60 * 10000L);
 
         response.setHeader("access",accessToken);

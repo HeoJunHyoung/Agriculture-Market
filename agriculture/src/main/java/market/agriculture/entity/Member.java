@@ -43,16 +43,14 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Review> review = new ArrayList<>();
-
     public Member() {
     }
 
-    public static Member createMemberForJWTFilter(String username, Role role) {
+    public static Member createMemberForJWTFilter(String username, Role role, Long memberId) {
         Member member = new Member();
         member.setUsername(username);
         member.setRole(role);
+        member.setId(memberId);
         return member;
     }
 

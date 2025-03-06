@@ -3,10 +3,9 @@ package market.agriculture.controller;
 import jakarta.validation.Valid;
 import market.agriculture.dto.CustomMemberDetails;
 import market.agriculture.dto.post.PostDetailsResponse;
-import market.agriculture.dto.post.postListResPonseDto;
+import market.agriculture.dto.post.PostListResponse;
 import market.agriculture.dto.post.PostUploadRequest;
 import market.agriculture.dto.post.ReviewUploadReqeust;
-import market.agriculture.entity.Post;
 import market.agriculture.service.PostService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -88,6 +87,7 @@ public class PostController {
         PostDetailsResponse postDetailsResponse = postService.getOneDetailPostWithReview(postId);
 
         return postDetailsResponse;
+
     }
 
 
@@ -113,7 +113,8 @@ public class PostController {
      * @apiNote 제목 게시글 검색을 위한 요청이다.
      */
     @GetMapping("/search/{title}")
-    public postListResPonseDto searchByTitle(@PathVariable String title){
+    public PostListResponse searchByTitle(@AuthenticationPrincipal CustomMemberDetails customMemberDetails,@PathVariable String title){
+ 
 
         return null;
     }
@@ -124,7 +125,7 @@ public class PostController {
      * @apiNote 랜덤 게시글 검색을 위한 요청이다.
      */
     @GetMapping("/search/random")
-    public postListResPonseDto searchByRandom(){
+    public PostListResponse searchByRandom(){
 
         return null;
     }

@@ -20,7 +20,7 @@ public class Review {
     @JoinColumn(name = "post_id") // 외래키
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
