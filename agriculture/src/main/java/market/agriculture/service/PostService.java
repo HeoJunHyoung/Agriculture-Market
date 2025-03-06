@@ -1,7 +1,7 @@
 package market.agriculture.service;
 
-import market.agriculture.dto.post.PostModifyDto;
-import market.agriculture.dto.post.PostUploadDto;
+import market.agriculture.dto.item.ItemCreateRequest;
+import market.agriculture.dto.post.PostUploadRequest;
 import market.agriculture.entity.Item;
 import market.agriculture.entity.Member;
 import market.agriculture.entity.Post;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Service
@@ -33,11 +32,7 @@ public class PostService {
     }
 
     @Transactional
-    public Long createPostWithItems(String username, PostUploadDto postUploadDto) {
-
-        if (!postUploadDto.isLengthEqual()){
-            throw new IllegalStateException("모든 Item은 단위와 가격, 양이 지정되어야 합니다.");
-        }
+    public Long createPostWithItems(String username, PostUploadRequest postUploadRequest) {
 
         List<Member> members = memberRepository.findByUsername(username);
 
@@ -46,21 +41,17 @@ public class PostService {
         }
         Member member = members.get(0);
 
-        if(postUploadDto.getDirectSaleAddress().isEmpty()){
-            postUploadDto.setDirectSaleAddress(member.getAddress());
+        if(postUploadRequest.getDirectSaleAddress().isEmpty()){
+            postUploadRequest.setDirectSaleAddress(member.getAddress());
         }
 
         if (!member.isSeller()) {
             throw new IllegalStateException("판매자만 게시글을 작성할 수 있습니다.");
         }
 
-        Post post = postUploadDto.createPost(member);
+        Post post = postUploadRequest.createPost(member);
 
-        if (!postUploadDto.isLengthEqual()){
-            throw new IllegalStateException("모든 Item은 단위와 가격, 양이 지정되어야 합니다.");
-        }
-
-        List<Item> items = postUploadDto.createItems();
+        List<Item> items = postUploadRequest.createItems();
         for(Item item : items){
             itemRepository.save(item);
             post.addItem(item);
@@ -71,12 +62,11 @@ public class PostService {
 
     }
 
-    // 진짜 너무 그지같이 짰는데 머리가 안굴러감;;
     @Transactional
-    public Long updatePostWithItems(String username, PostModifyDto postModifyDto) {
+    public Long updatePostWithItems(String username, Long postId, PostUploadRequest postUploadRequest) {
 
         // 존재하는 post 불러옴.
-        Post post = postRepository.findById(postModifyDto.getPostId())
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다."));
 
         Member member = memberRepository.findByUsername(username)
@@ -88,22 +78,18 @@ public class PostService {
         }
 
         // 기본 주소 입력
-        if (postModifyDto.getDirectSaleAddress() != null) {
-            post.setDirectSaleAddress(postModifyDto.getDirectSaleAddress());
-        }
-
-        if (!postModifyDto.isLengthEqual()){
-            throw new IllegalStateException("모든 Item은 단위와 가격, 양이 지정되어야 합니다.");
+        if (postUploadRequest.getDirectSaleAddress() != null) {
+            post.setDirectSaleAddress(postUploadRequest.getDirectSaleAddress());
         }
 
         // 게시글이 가지고 있는 item에 같은 값이 있는지, 새로운 값이 있는지 확인 후 생성 및 isPublish 관리
-        List<Boolean> newlyAddedItemList = new ArrayList<>(IntStream.range(0, postModifyDto.getItemQuantities().size())
+        List<Boolean> newlyAddedItemList = new ArrayList<>(IntStream.range(0, postUploadRequest.returnItemSize())
                 .mapToObj(i -> true)
                 .toList());
 
         for (Item item: post.getItems()){
 
-            int index = item.modifyCheckItem(postModifyDto.getItemName(), postModifyDto.getItemPrices(),postModifyDto.getItemWeights(),postModifyDto.getItemQuantities());
+            int index = item.modifyCheckItem(postUploadRequest.getItemCreateRequests());
             if (index > -1){
                 newlyAddedItemList.set(index,false);
             }
@@ -113,21 +99,21 @@ public class PostService {
         for(int i=0; i<newlyAddedItemList.size(); i++){
 
             if(newlyAddedItemList.get(i)){
-                Item item = Item.createItem(postModifyDto.getItemName(),postModifyDto.getItemWeights().get(i),postModifyDto.getItemQuantities().get(i), postModifyDto.getItemPrices().get(i));
+                ItemCreateRequest itemDto = postUploadRequest.getItemCreateRequests().get(i);
+                Item item = Item.createItem(itemDto.getItemName(),itemDto.getItemWeight(),itemDto.getItemQuantity(),itemDto.getItemPrice());
                 post.addItem(item);
                 itemRepository.save(item);
             }
 
         }
 
-        post.modifyPost(postModifyDto.getTitle(),postModifyDto.getPostDescription(),postModifyDto.getDirectSaleAddress(),postModifyDto.getTotalQuantity());
+        post.modifyPost(postUploadRequest.getTitle(),postUploadRequest.getPostDescription(),postUploadRequest.getDirectSaleAddress(),postUploadRequest.getTotalQuantity());
         postRepository.save(post);
         return post.getId();
     }
 
     @Transactional
     public Long deletePostWithItems(String username, Long postId){
-
 
         Member member = memberRepository.findByUsername(username)
                 .stream().findFirst()

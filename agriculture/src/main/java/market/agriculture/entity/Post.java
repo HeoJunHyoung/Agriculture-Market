@@ -95,5 +95,6 @@ public class Post {
         this.setPostDescription(postDescription);
         this.setDirectSaleAddress(directSaleAddress);
         this.setTotalQuantity(totalQuantity);
+        this.setIsPublished(true);
     }
 }

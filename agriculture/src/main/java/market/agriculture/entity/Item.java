@@ -3,6 +3,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import market.agriculture.dto.item.ItemCreateRequest;
 import market.agriculture.exception.custom.NotEnoughStockException;
 
 import java.util.ArrayList;
@@ -77,23 +78,22 @@ public class Item {
         this.isPublished = false;
     }
 
-    public int modifyCheckItem(String itemName, List<Integer> itemPrices, List<Long> itemWeights, List<Long> itemQuantities) {
-        for (int i = 0; i < itemPrices.size(); i++) {
+    public int modifyCheckItem(List<ItemCreateRequest> itemCreateRequests) {
+            for (int i = 0; i < itemCreateRequests.size(); i++) {
 
-            // item 가격, 이름, 무게가 같으면 quantity값만 수정
-            if (this.itemName.equals(itemName) &&
-                    this.price == itemPrices.get(i) &&
-                    this.weight.equals(itemWeights.get(i))) {
+                // item 가격, 이름, 무게가 같으면 quantity값만 수정
+                if (this.itemName.equals(itemCreateRequests.get(i).getItemName()) &&
+                        this.price == itemCreateRequests.get(i).getItemPrice() &&
+                        this.weight.equals(itemCreateRequests.get(i).getItemWeight())) {
 
-                // 기존 Item과 이름, 가격, 무게가 같은 경우, 수량 업데이트
-                this.setStockQuantity(itemQuantities.get(i));
-                this.setIsPublished(true);
-                return i;
+                    // 기존 Item과 이름, 가격, 무게가 같은 경우, 수량 업데이트
+                    this.setStockQuantity(itemCreateRequests.get(i).getItemQuantity());
+                    this.setIsPublished(true);
+                    return i;
+                }
             }
+            // 다른경우 flag = False
+            this.setIsPublished(false);
+            return -1;
         }
-        // 다른경우 flag = False
-        this.setIsPublished(false);
-        return -1;
-    }
-
 }

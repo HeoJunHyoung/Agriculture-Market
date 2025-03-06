@@ -3,10 +3,9 @@ package market.agriculture.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import market.agriculture.dto.CustomMemberDetails;
-import market.agriculture.dto.post.PostModifyDto;
 import market.agriculture.dto.post.PostInfoDto;
 import market.agriculture.dto.post.PostListResPonseDto;
-import market.agriculture.dto.post.PostUploadDto;
+import market.agriculture.dto.post.PostUploadRequest;
 import market.agriculture.dto.post.ReviewUploadDto;
 import market.agriculture.service.PostService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,14 +34,14 @@ public class PostController {
 
     /**
      *
-     * @param postUploadDto
+     * @param postUploadRequest
      * @param customMemberDetails
      * @apiNote 게시판 입력값을 받아 게시글을 등록한다.
      */
     @PostMapping("/upload")
-    public void uploadPost(@Valid @RequestBody PostUploadDto postUploadDto, @AuthenticationPrincipal CustomMemberDetails customMemberDetails){
+    public void uploadPost(@Valid @RequestBody PostUploadRequest postUploadRequest, @AuthenticationPrincipal CustomMemberDetails customMemberDetails){
 
-        postService.createPostWithItems(customMemberDetails.getUsername(),postUploadDto);
+        postService.createPostWithItems(customMemberDetails.getUsername(), postUploadRequest);
 
     }
 
@@ -52,11 +51,12 @@ public class PostController {
      * @param customMemberDetails
      * @apiNote 게시판 입력값의 수정사항을 받아 게시글을 등록한다.
      */
-    @PostMapping("/modify")
-    public void modifyPost(@Valid @RequestBody PostModifyDto postModifyDto, @AuthenticationPrincipal CustomMemberDetails customMemberDetails){
+    @PostMapping("/modify/{postId}")
+    public void modifyPost( @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
+                            @Valid @RequestBody PostUploadRequest postUploadRequest, @PathVariable("postId") Long postId){
 
 
-        postService.updatePostWithItems(customMemberDetails.getUsername(),postModifyDto);
+        postService.updatePostWithItems(customMemberDetails.getUsername(),postId,postUploadRequest);
 
     }
 
