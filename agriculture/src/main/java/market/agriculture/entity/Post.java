@@ -41,7 +41,6 @@ public class Post {
     @Column(name = "total_quantity")
     private Long totalQuantity;
 
-    @Column(name = "direct_sale_address")
     @Embedded
     private Address directSaleAddress;
 
