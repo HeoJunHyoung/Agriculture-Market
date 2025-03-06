@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 
 @Getter @Setter
 public class PostUploadRequest {
+
     public PostUploadRequest() {
     }
 
@@ -36,31 +37,7 @@ public class PostUploadRequest {
 
     private List<ItemCreateRequest> itemCreateRequests;
 
-
     public int returnItemSize(){
         return this.itemCreateRequests.size();
-    }
-
-    public Post createPost(Member member) {
-
-        return Post.createPost(member, this.getTitle(), this.getPostDescription(), this.getDirectSaleAddress(), this.getTotalQuantity());
-
-    }
-
-    public List<Item> createItems() {
-        List<Item> items = new ArrayList<>();
-        // items를 만드는 함수를 item entity에 만드는게 맞으려나? 일단 item 1개만 생성하는 함수만 있어서 이렇게 짜둠.
-
-        IntStream.range(0,this.itemCreateRequests.size())
-                .forEach(i -> {
-                    items.add(Item.createItem(
-                            this.itemCreateRequests.get(i).getItemName(),
-                            this.itemCreateRequests.get(i).getItemWeight(),
-                            this.itemCreateRequests.get(i).getItemQuantity(),
-                            this.itemCreateRequests.get(i).getItemPrice()
-                    ));
-                });
-
-        return items;
     }
 }

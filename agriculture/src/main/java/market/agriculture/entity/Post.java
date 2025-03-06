@@ -63,7 +63,7 @@ private Long id;
     }
 
     //==생성 메서드==//
-    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity, Item... items) {
+    public static Post createPost(Member member, String postTitle, String postDescription, Address directSaleAddress, long totalQuantity, List<Item> items) {
         Post post = new Post();
         post.setMember(member);
         post.setPostTitle(postTitle);

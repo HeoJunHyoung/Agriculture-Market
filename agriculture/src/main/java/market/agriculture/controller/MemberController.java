@@ -3,6 +3,7 @@ package market.agriculture.controller;
 import jakarta.validation.Valid;
 import market.agriculture.dto.member.JoinRequest;
 import market.agriculture.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,6 +17,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }

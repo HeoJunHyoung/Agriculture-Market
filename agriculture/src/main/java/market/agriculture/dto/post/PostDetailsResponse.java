@@ -36,32 +36,23 @@ public class PostDetailsResponse {
 
     public List<ReviewTotalResponse> reviewTotalRespones;
 
-    public static PostDetailsResponse createByPost(Post post){
+    public static PostDetailsResponse createPostDetailResponse(String nickname,String phoneNumber, String postTitle, String postDescription,
+                                                   LocalDateTime postCreatedAt, Long totalQuantity, String directSaleAddress,
+                                                   List<ItemTotalResponse> itemTotalResponses, List<ReviewTotalResponse> reviewTotalResponseList){
 
         PostDetailsResponse postDetailsResponse = new PostDetailsResponse();
-        Member seller = post.getMember();
 
-        postDetailsResponse.setSellerNickname(seller.getNickname());
-        postDetailsResponse.setPhoneNumber(seller.getPhoneNumber().toString());
+        postDetailsResponse.setSellerNickname(nickname);
+        postDetailsResponse.setPhoneNumber(phoneNumber);
 
-        postDetailsResponse.setPostTitle(post.getPostTitle());
-        postDetailsResponse.setPostDescription(post.getPostDescription());
-        postDetailsResponse.setCreatedAt(post.getCreatedAt());
-        postDetailsResponse.setTotalQuantity(post.getTotalQuantity());
-        postDetailsResponse.setDirectSaleAddress(post.getDirectSaleAddress().toString());
+        postDetailsResponse.setPostTitle(postTitle);
+        postDetailsResponse.setPostDescription(postDescription);
+        postDetailsResponse.setCreatedAt(postCreatedAt);
+        postDetailsResponse.setTotalQuantity(totalQuantity);
+        postDetailsResponse.setDirectSaleAddress(directSaleAddress);
 
-        List<ItemTotalResponse> itemTotalResponseList = new ArrayList<>();
-        post.getItems().stream().forEach(item -> {
-            itemTotalResponseList.add(ItemTotalResponse.createByReview(item));
-        });
-        postDetailsResponse.setItemTotalResponses(itemTotalResponseList);
-
-        List<ReviewTotalResponse> reviewTotalResponseList = new ArrayList<>();
-                post.getReviews().stream().forEach(review -> {
-                    reviewTotalResponseList.add(ReviewTotalResponse.createByReview(review));
-        });
+        postDetailsResponse.setItemTotalResponses(itemTotalResponses);
         postDetailsResponse.setReviewTotalRespones(reviewTotalResponseList);
-
 
         return postDetailsResponse;
 

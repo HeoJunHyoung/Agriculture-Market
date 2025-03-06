@@ -1,8 +1,10 @@
 package market.agriculture.service;
 
 import market.agriculture.dto.item.ItemCreateRequest;
+import market.agriculture.dto.item.ItemTotalResponse;
 import market.agriculture.dto.post.PostDetailsResponse;
 import market.agriculture.dto.post.PostUploadRequest;
+import market.agriculture.dto.post.ReviewTotalResponse;
 import market.agriculture.dto.post.ReviewUploadReqeust;
 import market.agriculture.entity.Item;
 import market.agriculture.entity.Member;
@@ -45,6 +47,7 @@ public class PostService {
         if(members.isEmpty()){
             throw new IllegalStateException("존재하지 않는 유저입니다.");
         }
+
         Member member = members.get(0);
 
         if(postUploadRequest.getDirectSaleAddress().isEmpty()){
@@ -55,13 +58,17 @@ public class PostService {
             throw new IllegalStateException("판매자만 게시글을 작성할 수 있습니다.");
         }
 
-        Post post = postUploadRequest.createPost(member);
-
-        List<Item> items = postUploadRequest.createItems();
-        for(Item item : items){
-            itemRepository.save(item);
-            post.addItem(item);
+        List<Item> items = new ArrayList<>();
+        for (ItemCreateRequest itemDto : postUploadRequest.getItemCreateRequests()) {
+            items.add(Item.createItem(
+                    itemDto.getItemName(),
+                    itemDto.getItemWeight(),
+                    itemDto.getItemQuantity(),
+                    itemDto.getItemPrice()
+            ));
         }
+        Post post = Post.createPost(member,postUploadRequest.getTitle(),postUploadRequest.getPostDescription(),
+                postUploadRequest.getDirectSaleAddress(),postUploadRequest.getTotalQuantity(), items);
 
         postRepository.save(post);
         return post.getId();
@@ -99,7 +106,6 @@ public class PostService {
             if (index > -1){
                 newlyAddedItemList.set(index,false);
             }
-            itemRepository.save(item);
         }
 
         for(int i=0; i<newlyAddedItemList.size(); i++){
@@ -108,7 +114,6 @@ public class PostService {
                 ItemCreateRequest itemDto = postUploadRequest.getItemCreateRequests().get(i);
                 Item item = Item.createItem(itemDto.getItemName(),itemDto.getItemWeight(),itemDto.getItemQuantity(),itemDto.getItemPrice());
                 post.addItem(item);
-                itemRepository.save(item);
             }
 
         }
@@ -137,7 +142,6 @@ public class PostService {
         List<Item> items = post.getItems();
         items.stream().forEach(item -> {
             item.unpublish();
-            itemRepository.save(item);
         });
 
         postRepository.save(post);
@@ -160,8 +164,6 @@ public class PostService {
 
         Review review = Review.createReview(post, member, reviewUploadReqeust.getReviewTitle(), reviewUploadReqeust.getReviewDescription());
 
-        reviewRepository.save(review);
-
         post.addReview(review);
 
         postRepository.save(post);
@@ -172,7 +174,27 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .stream().findFirst().orElseThrow(()-> new IllegalStateException("존재하지 않는 게시글입니다."));
 
-        return PostDetailsResponse.createByPost(post);
+        Member seller = post.getMember();
+
+
+        List<ItemTotalResponse> itemTotalResponseList = new ArrayList<>();
+        post.getItems().stream().forEach(item -> {
+            itemTotalResponseList.add(ItemTotalResponse.createByReview(item));
+        });
+
+        List<ReviewTotalResponse> reviewTotalResponseList = new ArrayList<>();
+
+        post.getReviews().stream().forEach(review -> {
+            reviewTotalResponseList.add(ReviewTotalResponse.createByReview(review));
+        });
+
+        PostDetailsResponse response = PostDetailsResponse.createPostDetailResponse(seller.getNickname(),seller.getPhoneNumber().toString(),
+                post.getPostTitle(),post.getPostDescription(),post.getCreatedAt(),post.getTotalQuantity(),
+                post.getDirectSaleAddress().toString(),itemTotalResponseList,reviewTotalResponseList
+        );
+
+
+        return response;
 
     }
 }
