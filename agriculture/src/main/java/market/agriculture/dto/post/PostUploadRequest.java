@@ -15,6 +15,8 @@ import java.util.stream.IntStream;
 
 @Getter @Setter
 public class PostUploadRequest {
+    public PostUploadRequest() {
+    }
 
     @NotBlank(message = "게시글 제목은 필수 입력 값입니다.")
     @Size(max = 100, message = "게시글 제목은 최대 100자까지 입력 가능합니다.")

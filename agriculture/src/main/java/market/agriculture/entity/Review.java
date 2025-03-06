@@ -20,6 +20,10 @@ public class Review {
     @JoinColumn(name = "post_id") // 외래키
     private Post post;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @Column(name = "review_title")
     private String reviewTitle;
 
@@ -29,8 +33,20 @@ public class Review {
     @Column(name = "review_date")
     private LocalDateTime createdAt;
 
-
     public Review() {
+    }
+
+    //==생성 메서드==//
+    public static Review createReview(Post post, Member member, String reviewTitle, String reviewDescription){
+
+        Review review = new Review();
+        review.setCreatedAt(LocalDateTime.now());
+        review.setPost(post);
+        review.setMember(member);
+        review.setReviewTitle(reviewTitle);
+        review.setReviewDescription(reviewDescription);
+
+        return review;
     }
 
 }

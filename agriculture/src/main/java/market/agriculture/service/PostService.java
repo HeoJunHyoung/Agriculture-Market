@@ -2,12 +2,15 @@ package market.agriculture.service;
 
 import market.agriculture.dto.item.ItemCreateRequest;
 import market.agriculture.dto.post.PostUploadRequest;
+import market.agriculture.dto.post.ReviewUploadReqeust;
 import market.agriculture.entity.Item;
 import market.agriculture.entity.Member;
 import market.agriculture.entity.Post;
+import market.agriculture.entity.Review;
 import market.agriculture.repository.ItemRepository;
 import market.agriculture.repository.MemberRepository;
 import market.agriculture.repository.PostRepository;
+import market.agriculture.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +27,13 @@ public class PostService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
 
-    @Autowired
-    public PostService(PostRepository postRepository, ItemRepository itemRepository, MemberRepository memberRepository) {
+    private final ReviewRepository reviewRepository;
+
+    public PostService(PostRepository postRepository, ItemRepository itemRepository, MemberRepository memberRepository, ReviewRepository reviewRepository) {
         this.postRepository = postRepository;
         this.itemRepository = itemRepository;
         this.memberRepository = memberRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Transactional
@@ -139,4 +144,25 @@ public class PostService {
         return post.getId();
     }
 
+    @Transactional
+    public void createReview(String username, ReviewUploadReqeust reviewUploadReqeust, Long postId) {
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다."));
+
+        if(!post.getIsPublished()){
+            throw new IllegalStateException("삭제처리된 게시글입니다.");
+        }
+
+        Member member = memberRepository.findByUsername(username)
+                .stream().findFirst().orElseThrow(()->new IllegalStateException("존재하지 않는 유저입니다."));
+
+        Review review = Review.createReview(post, member, reviewUploadReqeust.getReviewTitle(), reviewUploadReqeust.getReviewDescription());
+
+        reviewRepository.save(review);
+
+        post.addReview(review);
+
+        postRepository.save(post);
+    }
 }

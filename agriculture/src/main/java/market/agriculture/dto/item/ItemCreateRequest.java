@@ -7,6 +7,8 @@ import lombok.Setter;
 @Getter @Setter
 public class ItemCreateRequest {
 
+    public ItemCreateRequest() {
+    }
 
     @NotBlank(message = "상품 이름은 필수 입력 값입니다.")
     @Size(max = 50, message = "상품 이름은 최대 50자까지 입력 가능합니다.")

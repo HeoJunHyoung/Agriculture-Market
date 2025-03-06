@@ -1,10 +1,8 @@
 package market.agriculture.controller;
 
 import jakarta.validation.Valid;
-import market.agriculture.dto.member.JoinDto;
-import market.agriculture.entity.Member;
+import market.agriculture.dto.member.JoinRequest;
 import market.agriculture.service.MemberService;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,13 +29,13 @@ public class MemberController {
 
     /**
      *
-     * @param joinDto
+     * @param joinRequest
      * @apiNote 실패시 에러 message혹은 validaiton message 전송되도록 작성이 필요하다. 회원가입 요청이다.
      */
     @PostMapping("/join")
-    public void join(@Valid @RequestBody JoinDto joinDto) {
+    public void join(@Valid @RequestBody JoinRequest joinRequest) {
 
-        memberService.join(joinDto);
+        memberService.join(joinRequest);
 
     }
 

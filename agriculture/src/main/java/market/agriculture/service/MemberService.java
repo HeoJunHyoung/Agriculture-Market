@@ -1,6 +1,6 @@
 package market.agriculture.service;
 
-import market.agriculture.dto.member.JoinDto;
+import market.agriculture.dto.member.JoinRequest;
 import market.agriculture.entity.Member;
 import market.agriculture.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ public class MemberService {
     }
 
     @Transactional
-    public Long join(JoinDto joinDto) {
+    public Long join(JoinRequest joinRequest) {
 
-        if(joinDto.isPasswordEqual()) {
+        if(joinRequest.isPasswordEqual()) {
 
-            joinDto.setPassword1(bCryptPasswordEncoder.encode(joinDto.getPassword1()));
-            Member member = joinDto.toEntity();
+            joinRequest.setPassword1(bCryptPasswordEncoder.encode(joinRequest.getPassword1()));
+            Member member = joinRequest.toEntity();
             validateDuplicateMember(member);
             memberRepository.save(member);
             return member.getId();

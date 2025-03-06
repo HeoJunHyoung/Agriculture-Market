@@ -43,6 +43,9 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Review> review = new ArrayList<>();
+
     public Member() {
     }
 
@@ -64,12 +67,6 @@ public class Member {
         member.setNickname(nickname);
         return member;
     }
-
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
 
     //==비즈니스 로직==//
     public boolean isSeller() {

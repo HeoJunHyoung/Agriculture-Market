@@ -6,9 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PostInfoDto {
-
-    public PostInfoDto() {
+public class postListResPonseDto {
+    public postListResPonseDto() {
     }
 }
-

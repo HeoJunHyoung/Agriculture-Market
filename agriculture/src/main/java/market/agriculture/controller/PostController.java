@@ -1,12 +1,12 @@
 package market.agriculture.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import market.agriculture.dto.CustomMemberDetails;
 import market.agriculture.dto.post.PostInfoDto;
-import market.agriculture.dto.post.PostListResPonseDto;
+import market.agriculture.dto.post.postListResPonseDto;
 import market.agriculture.dto.post.PostUploadRequest;
-import market.agriculture.dto.post.ReviewUploadDto;
+import market.agriculture.dto.post.ReviewUploadReqeust;
+import market.agriculture.entity.Post;
 import market.agriculture.service.PostService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +47,9 @@ public class PostController {
 
     /**
      *
-     * @param postModifyDto
      * @param customMemberDetails
+     * @param postUploadRequest
+     * @param postId
      * @apiNote 게시판 입력값의 수정사항을 받아 게시글을 등록한다.
      */
     @PostMapping("/modify/{postId}")
@@ -70,6 +71,7 @@ public class PostController {
     public void deletePost(@AuthenticationPrincipal CustomMemberDetails customMemberDetails, @PathVariable("postId") Long postId){
 
         postService.deletePostWithItems(customMemberDetails.getUsername(),postId);
+        //리뷰 삭제도 진행해야함.
 
     }
 
@@ -90,12 +92,17 @@ public class PostController {
 
     /**
      *
-     * @param request
-     * @param reviewUploadDto
+     * @param customMemberDetails
+     * @param reviewUploadReqeust
+     * @param postId
      * @apiNote 리뷰 정보를 받아 저장한다.
      */
-    @PostMapping("/review")
-    public void createReview(HttpServletRequest request, ReviewUploadDto reviewUploadDto){
+    @PostMapping("/review/{postId}")
+    public void createReview(@AuthenticationPrincipal CustomMemberDetails customMemberDetails,
+                             @RequestBody ReviewUploadReqeust reviewUploadReqeust, @PathVariable("postId") Long postId){
+
+        postService.createReview(customMemberDetails.getUsername(),reviewUploadReqeust,postId);
+
 
     }
 
@@ -106,7 +113,7 @@ public class PostController {
      * @apiNote 제목 게시글 검색을 위한 요청이다.
      */
     @GetMapping("/search/{title}")
-    public PostListResPonseDto searchByTitle(@PathVariable String title){
+    public postListResPonseDto searchByTitle(@PathVariable String title){
 
         return null;
     }
@@ -117,7 +124,7 @@ public class PostController {
      * @apiNote 랜덤 게시글 검색을 위한 요청이다.
      */
     @GetMapping("/search/random")
-    public PostListResPonseDto searchByRandom(){
+    public postListResPonseDto searchByRandom(){
 
         return null;
     }
