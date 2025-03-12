@@ -40,6 +40,14 @@ public class Item {
         return item;
     }
 
+    //==업데이트 메서드==//
+    public void updateItem(String itemName, Long weight, Long stockQuantity, int price) {
+        this.itemName = itemName;
+        this.weight = weight;
+        this.stockQuantity = stockQuantity;
+        this.price = price;
+    }
+
     //==비즈니스 로직==//
     public void addStockQuantity(int quantity) {
         stockQuantity += quantity;

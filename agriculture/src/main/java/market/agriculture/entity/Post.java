@@ -67,11 +67,20 @@ public class Post {
         for (Item item : items) {
             post.addItem(item);
         }
-
         return post;
     }
 
+    //==업데이트 메서드==//
+    public void updatePostDetails(String postTitle, String postDescription, Address directSaleAddress){
+        this.postTitle = postTitle;
+        this.postDescription = postDescription;
+        this.directSaleAddress = directSaleAddress;
+    }
 
-
+    //==아이템 추가 메서드==//
+    public void addNewItem(String itemName, Long weight, Long stockQuantity, int price) {
+        Item newItem = Item.createItem(itemName, weight, stockQuantity, price);
+        addItem(newItem);
+    }
 
 }

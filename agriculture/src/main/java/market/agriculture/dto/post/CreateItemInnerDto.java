@@ -1,14 +1,12 @@
 package market.agriculture.dto.post;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import market.agriculture.entity.Post;
 
 @Getter @Setter
 @Slf4j
-public class CreateItemDto {
+public class CreateItemInnerDto {
 
     private Long postId;
 
@@ -20,8 +18,6 @@ public class CreateItemDto {
 
     private int price;
 
-
-
-    public CreateItemDto() {
+    public CreateItemInnerDto() {
     }
 }
