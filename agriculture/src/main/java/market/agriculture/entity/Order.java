@@ -3,9 +3,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.enumerate.DeliveryStatus;
-import market.agriculture.entity.enumerate.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public class Order {
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private DeliveryStatus status;
 
     public Order() {
     }
@@ -64,7 +62,7 @@ public class Order {
         for (OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }
-        order.setStatus(OrderStatus.RESERVED);
+        order.setStatus(DeliveryStatus.PREPARED);
         order.setCreatedAt(LocalDateTime.now());
         return order;
 
@@ -75,7 +73,7 @@ public class Order {
 //        if (delivery.getStatus() == DeliveryStatus.DEPARTED) {
 //            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
 //        }
-        this.status = OrderStatus.CANCEL;
+        this.status = DeliveryStatus.CANCEL;
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel();
         }

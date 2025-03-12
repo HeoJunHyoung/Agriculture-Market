@@ -3,9 +3,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
-import market.agriculture.entity.enumerate.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
