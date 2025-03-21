@@ -10,25 +10,17 @@ import java.util.List;
 
 @Getter @Setter
 @Slf4j
-public class CreatePostRequest {
-
-    private Long memberId;
-
-    private String nickName;
+public class UpdatePostRequest {
 
     private String postTitle;
 
     private String postDescription;
 
-    private Long totalQuantity;
 
     private Address directSaleAddress;
 
-    private Phone phoneNumber;
+    private List<UpdateItemInnerDto> items;
 
-    private List<CreateItemInnerDto> items;
-
-    public CreatePostRequest() {
+    public UpdatePostRequest() {
     }
-
 }

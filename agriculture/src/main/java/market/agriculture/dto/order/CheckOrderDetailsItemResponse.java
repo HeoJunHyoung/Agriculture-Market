@@ -33,14 +33,4 @@ public class CheckOrderDetailsItemResponse {
         price = orderItem.getPrice();
         count = orderItem.getCount();
     }
-    @Override
-    public String toString() {
-        return "CheckOrderDetailsItemResponse{" +
-                "id=" + id +
-                ", itemId=" + itemId +
-                ", itemName='" + itemName + '\'' +
-                ", price=" + price +
-                ", count=" + count +
-                '}';
-    }
 }

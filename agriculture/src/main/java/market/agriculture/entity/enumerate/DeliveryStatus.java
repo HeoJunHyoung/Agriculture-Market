@@ -1,8 +1,8 @@
 package market.agriculture.entity.enumerate;
 
 public enum DeliveryStatus {
+    CANCEL,
+    PREPARED,
     DEPARTED,
-    IN_TRANSIT,
-    PENDING_ARRIVAL,
     DELIVERED
 }

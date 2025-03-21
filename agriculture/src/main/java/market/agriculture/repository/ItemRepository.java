@@ -17,8 +17,8 @@ public class ItemRepository {
         em.persist(item);
     }
 
-    public Optional<Item> findById(Long itemId) {
-        return Optional.ofNullable(em.find(Item.class, itemId));
+    public Item findById(Long itemId) {
+        return em.find(Item.class, itemId);
     }
 
 

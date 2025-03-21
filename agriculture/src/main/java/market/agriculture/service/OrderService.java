@@ -62,11 +62,11 @@ public class OrderService {
         // 주문 상품 생성
         List<OrderItem> orderItems = request.getOrderItems().stream()
                 .map(orderItemRequest -> {
-                    Item item = itemRepository.findById(orderItemRequest.getItemId())
-                            .orElseThrow(() -> {
-                                log.error("Item not found with ID: {}", orderItemRequest.getItemId());
-                                return new IllegalArgumentException("상품을 찾을 수 없습니다.");
-                            });
+                    Item item = itemRepository.findById(orderItemRequest.getItemId());
+                    if (item == null) {
+                        log.error("Item not found with ID: {}", orderItemRequest.getItemId());
+                        throw new IllegalArgumentException("상품을 찾을 수 없습니다."); // 예외를 반환
+                    }
                     return orderItemRequest.toEntity(item);
                 })
                 .collect(Collectors.toList());
@@ -118,14 +118,7 @@ public class OrderService {
      */
     public CheckOrderDetailsResponse getOrdersDetailsByOrderId(Long orderId) {
         Order order = orderRepository.findOrderDetailsByOrderId(orderId);
-        log.info("Order: {}", order);
-        log.info("Order Items: {}", order.getOrderItems());
-        log.info("Order Member: {}", order.getMember());
-        log.info("Order Delivery: {}", order.getDelivery());
-
-        CheckOrderDetailsResponse orderDto = new CheckOrderDetailsResponse(order);
-        log.warn("CheckOrderDetailsResponse: {}", orderDto); // DTO 객체 로깅
-        return orderDto;
+        return new CheckOrderDetailsResponse(order);
     }
 
 

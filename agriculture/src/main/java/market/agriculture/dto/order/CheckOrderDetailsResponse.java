@@ -33,15 +33,4 @@ public class CheckOrderDetailsResponse {
                         .collect(Collectors.toList()) : Collections.emptyList(); // null 체크
     }
 
-    @Override
-    public String toString() {
-        return "CheckOrderDetailsResponse{" +
-                "orderId=" + orderId +
-                ", name='" + name + '\'' +
-                ", orderItemResponseList=" + (orderItemResponseList != null ?
-                orderItemResponseList.stream()
-                        .map(CheckOrderDetailsItemResponse::toString)
-                        .collect(Collectors.toList()) : "null") +
-                '}';
-    }
 }

@@ -3,9 +3,7 @@ package market.agriculture.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import market.agriculture.entity.embedded.Address;
-import market.agriculture.entity.enumerate.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -71,24 +69,19 @@ private Long id;
         for (Item item : items) {
             post.addItem(item);
         }
-
         return post;
     }
 
-
-    // 비즈니스 로직
-    public void unpublish() {
-//        if (!this.isPublished) {
-//            throw new IllegalStateException("이미 비공개된 게시글입니다.");
-//        }
-        this.isPublished = false;
+    //==업데이트 메서드==//
+    public void updatePostDetails(String postTitle, String postDescription, Address directSaleAddress){
+        this.postTitle = postTitle;
+        this.postDescription = postDescription;
+        this.directSaleAddress = directSaleAddress;
     }
 
-    public void modifyPost(String title, String postDescription, Address directSaleAddress, Long totalQuantity) {
-        this.setPostTitle(title);
-        this.setPostDescription(postDescription);
-        this.setDirectSaleAddress(directSaleAddress);
-        this.setTotalQuantity(totalQuantity);
-        this.setIsPublished(true);
+    //==아이템 추가 메서드==//
+    public void addNewItem(String itemName, Long weight, Long stockQuantity, int price) {
+        Item newItem = Item.createItem(itemName, weight, stockQuantity, price);
+        addItem(newItem);
     }
 }
