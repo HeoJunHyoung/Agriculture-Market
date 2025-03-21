@@ -24,7 +24,7 @@ private Long id;
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post")
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -41,7 +41,6 @@ private Long id;
     @Column(name = "total_quantity")
     private Long totalQuantity;
 
-    @Column(name = "direct_sale_address")
     @Embedded
     private Address directSaleAddress;
 
@@ -52,11 +51,6 @@ private Long id;
     }
 
     //==연관관계 편의 메서드==//
-    public void addReview(Review review) {
-        reviews.add(review);
-        review.setPost(this);
-    }
-
     public void addItem(Item item) {
         items.add(item);
         item.setPost(this);

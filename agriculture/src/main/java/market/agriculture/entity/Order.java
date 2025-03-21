@@ -25,10 +25,10 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -72,9 +72,9 @@ public class Order {
 
     //==비즈니스 로직==//
     public void cancel() {
-        if (delivery.getStatus() == DeliveryStatus.DEPARTED) {
-            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
-        }
+//        if (delivery.getStatus() == DeliveryStatus.DEPARTED) {
+//            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+//        }
         this.status = OrderStatus.CANCEL;
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel();

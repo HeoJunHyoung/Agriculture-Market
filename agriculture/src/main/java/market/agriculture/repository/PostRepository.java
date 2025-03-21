@@ -2,13 +2,15 @@ package market.agriculture.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+<<<<<<< HEAD
 import market.agriculture.entity.Member;
 import market.agriculture.entity.Order;
+=======
+>>>>>>> main
 import market.agriculture.entity.Post;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class PostRepository {
@@ -37,6 +39,16 @@ public class PostRepository {
         return em.createQuery("select p from Post p", Post.class)
                 .getResultList();
     }
+
+    public Post findReviewsByPostId(Long postId) {
+        return em.createQuery("select p from Post p " +
+                "join fetch p.reviews r " +
+                "join fetch r.member m " +
+                "where p.id = :postId", Post.class)
+                .setParameter("postId", postId)
+                .getSingleResult();
+    }
+
 
 
 }

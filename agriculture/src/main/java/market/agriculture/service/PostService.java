@@ -1,11 +1,16 @@
 package market.agriculture.service;
 
+<<<<<<< HEAD
 import market.agriculture.dto.item.ItemCreateRequest;
 import market.agriculture.dto.item.ItemTotalResponse;
 import market.agriculture.dto.post.PostDetailsResponse;
 import market.agriculture.dto.post.PostUploadRequest;
 import market.agriculture.dto.post.ReviewTotalResponse;
 import market.agriculture.dto.post.ReviewUploadReqeust;
+=======
+import market.agriculture.dto.post.CreateItemDto;
+import market.agriculture.dto.post.CreatePostRequest;
+>>>>>>> main
 import market.agriculture.entity.Item;
 import market.agriculture.entity.Member;
 import market.agriculture.entity.Post;
@@ -20,7 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.stream.IntStream;
+=======
+import java.util.stream.Collectors;
+>>>>>>> main
 
 @Service
 @Transactional(readOnly = true)
@@ -39,8 +48,16 @@ public class PostService {
         this.reviewRepository = reviewRepository;
     }
 
+    /**
+     * Long memberId, String postTitle, String postDescription,
+     *                                     Address directSaleAddress, Long totalQuantity, List<Item> items
+     */
     @Transactional
+<<<<<<< HEAD
     public Long createPostWithItems(String username, PostUploadRequest postUploadRequest) {
+=======
+    public Long createPostWithItems(CreatePostRequest request, Long memberId) {
+>>>>>>> main
 
         List<Member> members = memberRepository.findByUsername(username);
 
@@ -58,6 +75,7 @@ public class PostService {
             throw new IllegalStateException("판매자만 게시글을 작성할 수 있습니다.");
         }
 
+<<<<<<< HEAD
         List<Item> items = new ArrayList<>();
         for (ItemCreateRequest itemDto : postUploadRequest.getItemCreateRequests()) {
             items.add(Item.createItem(
@@ -69,9 +87,19 @@ public class PostService {
         }
         Post post = Post.createPost(member,postUploadRequest.getTitle(),postUploadRequest.getPostDescription(),
                 postUploadRequest.getDirectSaleAddress(),postUploadRequest.getTotalQuantity(), items);
+=======
+        List<CreateItemDto> itemsDto = request.getItems();
+        List<Item> items = itemsDto.stream()
+                .map(itemDto -> Item.createItem(itemDto.getItemName(), itemDto.getWeight(), itemDto.getStockQuantity(), itemDto.getPrice()))
+                .collect(Collectors.toList());
+
+        Post post = Post.createPost(member, request.getPostTitle(), request.getPostDescription(), request.getDirectSaleAddress(), request.getTotalQuantity(), items);
+>>>>>>> main
 
         postRepository.save(post);
+
         return post.getId();
+<<<<<<< HEAD
 
     }
 
@@ -196,5 +224,7 @@ public class PostService {
 
         return response;
 
+=======
+>>>>>>> main
     }
 }

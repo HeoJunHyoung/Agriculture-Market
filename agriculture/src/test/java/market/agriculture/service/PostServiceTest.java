@@ -17,6 +17,7 @@
 //
 //import java.util.Arrays;
 //import java.util.List;
+//import java.util.Optional;
 //
 //import static org.assertj.core.api.Assertions.*;
 //import static org.junit.jupiter.api.Assertions.*;
@@ -44,8 +45,9 @@
 //
 //
 //        // 상품 아이템 추가
-//        Item item1 = new Item("귤", 1L, 100L, 25000);
-//        Item item2 = new Item("귤", 2L, 50L, 40000);
+//        Item item1 = Item.createItem("귤", 1L, 100L, 25000);
+//        Item item2 = Item.createItem("귤", 2L, 50L, 40000);
+//
 //        List<Item> items = Arrays.asList(item1, item2);
 //
 //
@@ -56,10 +58,11 @@
 //        Long totalQuantity = 150L; // 총 재고량 (100 + 50)
 //
 //        // 게시글 등록
-//        Long postId = postService.createPostWithItems(member.getId(),);
+//        Long postId = postService.createPostWithItems(member.getId(), postTitle, postDescription, directSaleAddress, totalQuantity, items);
 //
 //        // 등록한 게시글 찾기
-//        Post savedPost = postRepository.findById(postId);
+//        Optional<Post> savedPost = postRepository.findById(postId)
+//                                    .orElseThrow(() -> throw new IllegalStateException("없음"));
 //
 //        // 게시글 정보 검증 부ㅜ분
 //        assertThat(postTitle).isEqualTo(savedPost.getPostTitle());

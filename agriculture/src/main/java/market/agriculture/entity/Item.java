@@ -39,6 +39,7 @@ public class Item {
     public Item() {
     }
 
+<<<<<<< HEAD
     public Item(Long id, Post post, String itemName, Long weight, Long stockQuantity, int price, Boolean isPublished) {
         this.id = id;
         this.post = post;
@@ -51,12 +52,19 @@ public class Item {
 
     //==생성 메서드==//
     public static Item createItem(String itemName, Long kg, Long stockQuantity,int price) {
+=======
+    //==생성 메서드==//
+    public static Item createItem(String itemName, Long kg, Long stockQuantity, int price) {
+>>>>>>> main
         Item item = new Item();
         item.setItemName(itemName);
         item.setWeight(kg);
         item.setStockQuantity(stockQuantity);
         item.setPrice(price);
+<<<<<<< HEAD
         item.setIsPublished(true);
+=======
+>>>>>>> main
         return item;
     }
 
