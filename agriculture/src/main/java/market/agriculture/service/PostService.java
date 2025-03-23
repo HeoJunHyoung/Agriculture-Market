@@ -104,6 +104,4 @@ public class PostService {
         return new CheckPostDetailsResponse(myPostDetail);
     }
 
-
-
 }

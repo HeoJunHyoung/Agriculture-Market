@@ -48,6 +48,7 @@ public class Review {
         post.getReviews().add(this);
     }
 
+    //== 생성 메서드 ==//
     public static Review createReview(Member member, Post post, int satisfy, String reviewTitle, String reviewDescription) {
         Review review = new Review();
         review.setMember(member);

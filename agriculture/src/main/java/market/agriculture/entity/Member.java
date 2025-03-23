@@ -2,6 +2,8 @@ package market.agriculture.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +23,17 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    //    사용자 회원가입 로그인 아이디 비밀번호
+    // 사용자 회원가입 로그인 아이디 비밀번호
+    @NotBlank(message = "ID는 필수 입력값입니다.")
+    @Size(min = 4, max = 20, message = "Username은 4자 이상 20자 이하로 입력해주세요.")
     private String username;
+
+    @NotBlank(message = "PW는 필수 입력값입니다.")
+    @Size(min = 8, max = 20, message = "Password는 8자 이상 20자 이하로 입력해주세요.")
     private String password;
 
+    @NotBlank(message = "Nickname은 필수 입력값입니다.")
+    @Size(min = 2, max = 10, message = "Nickname은 2자 이상 10자 이하로 입력해주세요.")
     private String nickname;
 
     private Long balance;
@@ -55,6 +64,7 @@ public class Member {
         member.setNickname(nickname);
         member.setAddress(address);
         member.setBalance(100000L);
+        member.setPhoneNumber(phoneNumber);
         member.setRole(role);
         return member;
     }
