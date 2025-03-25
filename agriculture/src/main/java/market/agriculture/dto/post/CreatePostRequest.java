@@ -12,8 +12,6 @@ import java.util.List;
 @Slf4j
 public class CreatePostRequest {
 
-    private Long memberId;
-
     private String nickName;
 
     private String postTitle;

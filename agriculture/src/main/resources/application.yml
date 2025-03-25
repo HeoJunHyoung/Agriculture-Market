@@ -1,27 +1,31 @@
 spring:
   application:
-    name=agriculture:
+    name: agriculture  # 콜론(:) 사용, 등호(=) 아님
   jwt:
     secret: "6fmZPo9Ep9SFkLMnm7gSfz6UijziZBaS"
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/agriculture_market
-    #?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/agriculture_market?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: root
-    password: 1234
+    password: "1234"  # 숫자만 있는 경우 따옴표로 감싸는 것이 안전
 
   jpa:
     hibernate:
       ddl-auto: update
-        #naming:
-      #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: false
     properties:
       hibernate:
         default_batch_fetch_size: 100
         format_sql: true
+    # naming:  # 주석 해제 시 하위 속성 추가 필요
+    #   physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
-logging.level:
-  org.hibernate.SQL: debug
-  org.hibernate.orm.jdbc.bind: trace #스프링 부트 3.x, hibernate6
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+      hibernate:
+        SQL: debug
+        orm.jdbc.bind: trace  # 들여쓰기 정렬 주의

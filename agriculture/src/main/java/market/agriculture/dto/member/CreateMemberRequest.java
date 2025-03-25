@@ -16,7 +16,6 @@ import market.agriculture.entity.enumerate.Role;
 public class CreateMemberRequest {
 
     @NotEmpty
-    @Size(min=8)
     private String username;
 
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
@@ -42,15 +41,5 @@ public class CreateMemberRequest {
         return this.password1.equals(this.password2);
     }
 
-    public Member toEntity() {
-        return Member.createMember(
-                this.getUsername(),
-                this.getPassword1(),
-                this.getNickname(),
-                this.getAddress(),
-                this.getPhoneNumber(),
-                this.getRole()
-        );
-    }
 
 }

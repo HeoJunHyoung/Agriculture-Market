@@ -1,4 +1,4 @@
-package market.agriculture.exception.dto;
+package market.agriculture.exception.custom;
 
 import lombok.Data;
 import lombok.Getter;

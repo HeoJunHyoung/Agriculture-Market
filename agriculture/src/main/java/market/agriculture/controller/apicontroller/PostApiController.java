@@ -5,8 +5,10 @@ import market.agriculture.dto.post.CheckPostDetailsResponse;
 import market.agriculture.dto.post.CheckPostResponse;
 import market.agriculture.dto.post.CreatePostRequest;
 import market.agriculture.dto.post.UpdatePostRequest;
+import market.agriculture.dto.security.CustomMemberDetails;
 import market.agriculture.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,22 +26,22 @@ public class PostApiController {
 
 
     @PostMapping("/upload")
-    public void upload(@RequestBody @Valid CreatePostRequest request, @RequestParam(value = "memberId") Long memberId) {
-        postService.createPostWithItems(request, memberId);
+    public void uploadPost(@AuthenticationPrincipal CustomMemberDetails memberDetails, @RequestBody @Valid CreatePostRequest request) {
+        postService.createPostWithItems(request, memberDetails.getId());
     }
 
     @PostMapping("/modify/{postId}")
-    public void update(@PathVariable(value="postId") Long postId, @RequestBody @Valid UpdatePostRequest request) {
+    public void updatePost(@PathVariable(value="postId") Long postId, @RequestBody @Valid UpdatePostRequest request) {
         postService.updatePostWithItems(postId, request);
     }
 
 
-    @PostMapping("/list")
-    public List<CheckPostResponse> checkPosts(@RequestParam(value = "memberId") Long memberId) {
-        return postService.findMyPosts(memberId);
+    @GetMapping("/list")
+    public List<CheckPostResponse> checkPosts(@AuthenticationPrincipal CustomMemberDetails memberDetails) {
+        return postService.findMyPosts(memberDetails.getId());
     }
 
-    @PostMapping("/list/{postId}")
+    @GetMapping("/list/{postId}")
     public CheckPostDetailsResponse checkPostDetails(@PathVariable(value="postId") Long postId) {
         return postService.findMyPostDetails(postId);
     }

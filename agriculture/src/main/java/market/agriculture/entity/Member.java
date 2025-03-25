@@ -26,14 +26,13 @@ public class Member {
     // 사용자 회원가입 로그인 아이디 비밀번호
     @NotBlank(message = "ID는 필수 입력값입니다.")
     @Size(min = 4, max = 20, message = "Username은 4자 이상 20자 이하로 입력해주세요.")
+    @Column(unique = true)
     private String username;
 
     @NotBlank(message = "PW는 필수 입력값입니다.")
-    @Size(min = 8, max = 20, message = "Password는 8자 이상 20자 이하로 입력해주세요.")
     private String password;
 
     @NotBlank(message = "Nickname은 필수 입력값입니다.")
-    @Size(min = 2, max = 10, message = "Nickname은 2자 이상 10자 이하로 입력해주세요.")
     private String nickname;
 
     private Long balance;

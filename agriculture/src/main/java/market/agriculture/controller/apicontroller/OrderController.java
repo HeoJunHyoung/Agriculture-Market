@@ -4,8 +4,10 @@ import jakarta.validation.Valid;
 import market.agriculture.dto.order.CheckOrderDetailsResponse;
 import market.agriculture.dto.order.CheckOrderResponse;
 import market.agriculture.dto.order.CreateOrderRequest;
+import market.agriculture.dto.security.CustomMemberDetails;
 import market.agriculture.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class OrderController {
      * 주문 전체 확인
      */
     @GetMapping("/check")
-    public List<CheckOrderResponse> checkMyOrder(@RequestParam(value="memberId") Long memberId) {
-        return orderService.getOrdersByMemberId(memberId);
+    public List<CheckOrderResponse> checkMyOrder(@AuthenticationPrincipal CustomMemberDetails memberDetails) {
+        return orderService.getOrdersByMemberId(memberDetails.getId());
     }
 
     /**

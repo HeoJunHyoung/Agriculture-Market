@@ -3,8 +3,10 @@ package market.agriculture.controller.apicontroller;
 import jakarta.validation.Valid;
 import market.agriculture.dto.review.ReviewRequest;
 import market.agriculture.dto.review.ReviewResponse;
+import market.agriculture.dto.security.CustomMemberDetails;
 import market.agriculture.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,8 @@ public class ReviewApiController {
     }
 
     @PostMapping("/comment")
-    public void comment(@RequestParam(value = "postId") Long postId, @RequestParam(value="memberId") Long memberId, @RequestBody @Valid ReviewRequest request) {
-        reviewService.comment(postId, memberId, request);
+    public void comment(@RequestParam(value = "postId") Long postId, @AuthenticationPrincipal CustomMemberDetails memberDetails, @RequestBody @Valid ReviewRequest request) {
+        reviewService.comment(postId, memberDetails.getId(), request);
     }
 
 

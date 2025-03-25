@@ -1,6 +1,6 @@
 package market.agriculture.exception;
 
-import market.agriculture.exception.dto.ErrorResult;
+import market.agriculture.exception.custom.ErrorResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
